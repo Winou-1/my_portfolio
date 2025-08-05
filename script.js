@@ -30,10 +30,27 @@ const displayItems = (item, index, active) => {
   // --x: Déplace les éléments horizontalement. Réduit pour afficher plus d'éléments.
   // --y: Déplace les éléments verticalement. Réduit encore pour moins de diagonale.
   // --rot: Rotation des éléments. Réduit encore pour un alignement plus horizontal.
-  item.style.setProperty('--x', `calc(${(index - active) * 80}%)`) // Ajusté à 80% comme demandé par l'utilisateur
+  item.style.setProperty('--x', `calc(${(index - active) * 80}%)`) // Réduit de 80% à 40% pour moins d'espacement horizontal
   item.style.setProperty('--y', `calc(${(index - active) * 0}%)`)   // Réduit de 50% à 10%
   item.style.setProperty('--rot', `calc(${(index - active) * 5}deg)`) // Réduit de 20deg à 5deg
   item.style.setProperty('--opacity', `calc(${zIndex} / var(--items) * 3 - 2)`) // Garde l'opacité
+
+  // Lazy loading des images : charge l'image seulement si elle est active ou proche
+  const img = item.querySelector('img');
+  if (img && img.dataset.src) { // Vérifie si l'attribut data-src existe
+    // Charge l'image si elle est l'élément actif ou un de ses voisins immédiats
+    if (index === active || index === active - 1 || index === active + 1) {
+      if (img.src !== img.dataset.src) { // Évite de recharger l'image si elle est déjà chargée
+        img.src = img.dataset.src;
+      }
+    } else {
+      // Optionnel: Décharger l'image ou la remplacer par un placeholder si elle est trop éloignée
+      // Cela peut être utile pour les très grands carrousels
+      // if (img.src && img.src !== 'placeholder.png') { // Remplacez 'placeholder.png' par une image de prévisualisation légère
+      //   img.src = 'placeholder.png';
+      // }
+    }
+  }
 }
 
 /*--------------------
