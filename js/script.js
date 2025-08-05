@@ -22,6 +22,9 @@ Items
 --------------------*/
 const $items = document.querySelectorAll('.carousel-item')
 const $cursors = document.querySelectorAll('.cursor')
+// Référence au nouveau titre du carrousel
+const mainCarouselTitle = document.getElementById('mainCarouselTitle');
+
 
 const displayItems = (item, index, active) => {
   const zIndex = getZindex([...$items], active)[index]
@@ -44,6 +47,15 @@ const animate = () => {
   active = Math.floor(progress/100*($items.length-1))
   
   $items.forEach((item, index) => displayItems(item, index, active))
+
+  // Logique pour afficher/masquer le titre principal
+  if (mainCarouselTitle) {
+    if (active === 4) { // Si la première slide est active
+      mainCarouselTitle.classList.add('visible');
+    } else {
+      mainCarouselTitle.classList.remove('visible');
+    }
+  }
 }
 animate()
 
@@ -130,8 +142,10 @@ navbar
 --------------------*/
 const navbarToggle = document.querySelector('.navbar-toggle');
 const navbarMenu = document.querySelector('.navbar-menu');
+const body = document.body; // Select the body element
 
 navbarToggle.addEventListener('click', () => {
     navbarToggle.classList.toggle('active');
     navbarMenu.classList.toggle('active');
+    body.classList.toggle('menu-active'); // Toggle the body class
 });
