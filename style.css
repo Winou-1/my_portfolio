@@ -261,10 +261,10 @@ body {
   transition-duration: .7s;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
     .carousel-item {
         /* Augmente la largeur et la hauteur du carrousel */
-        --width: clamp(250px, 60vw, 400px);
-        --height: clamp(350px, 80vw, 500px);
+        --width: clamp(250px, 60vw, 300px);
+        --height: clamp(350px, 80vw, 400px);
     }
 }
