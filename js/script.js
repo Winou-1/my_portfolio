@@ -128,9 +128,10 @@ document.addEventListener('touchend', handleMouseUp)
 /*--------------------
 navbar
 --------------------*/
-const menuHamburger = document.querySelector(".menu-hamburger")
-const navLinks = document.querySelector(".nav-links")
- 
-menuHamburger.addEventListener('click',()=>{
-navLinks.classList.toggle('mobile-menu')
-})
+const navbarToggle = document.querySelector('.navbar-toggle');
+const navbarMenu = document.querySelector('.navbar-menu');
+
+navbarToggle.addEventListener('click', () => {
+    navbarToggle.classList.toggle('active');
+    navbarMenu.classList.toggle('active');
+});

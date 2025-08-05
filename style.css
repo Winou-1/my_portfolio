@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
 /* Reset simple */
 * {
   margin: 0;
@@ -10,7 +11,7 @@
 }
 
 body {
-  font-family:'Orelo-sw-db', serif;
+  font-family: "Jost", serif;
   color: white;
   background: linear-gradient(45deg, #202020, #0d2229, #000000);
 }
@@ -19,89 +20,138 @@ body {
 
 /* navbar */
 .navbar {
-  position: absolute;
-  top: 0;
-  padding: 50px;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  align-items: center;
-  box-sizing: border-box;
-  z-index: 1000;
-}
-
-.navbar a {
-  color: white;
-}
-
-.navbar .logo {
-  font-size: 2rem;
-  font-weight: bold;
-}
-
-.navbar .nav-links ul{
-  display: flex;
-}
-
-.navbar .nav-links ul li{
-  margin: 0 25px;
-}
-
-.navbar .nav-links ul li.active a{
-  color: red;
-  font-weight: 600;
-}
-.navbar .menu-hamburger {
-    display: none;
-  position: absolute;
-  top: 50px;
-  right: 50px;
-  width: 35px;;
-}
-
-
-
-@media screen and (max-width: 900px) {
-    .navbar{
-        padding : 0;
-    }
-    .navbar .menu-hamburger {
-        display: block;
-    }
-
-  .nav-links{
-    top: 0;
-    left: 0;
-    position:absolute;
-    background-color: rgba(255, 255, 255, 0.253);
-    width: 100%;
-    height: 100vh;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    height: 80px;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    background: transparent;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(10px);
-    margin-left : -100%;
-    transition: all 0.5s ease;
-  }
+    z-index: 999;
+}
 
-  .nav-links ul {
+.navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 2rem;
+    max-width: 1600px;
+}
+
+.navbar-logo {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.navbar-container .navbar-menu {
+    display: flex;
+    text-align: center;
+    gap: 1.5rem;
+    list-style: none;
+}
+
+.navbar-container .navbar-menu li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 500;
+    padding: 3px 20px;
+    border-radius: 20px;
+    border: 2px solid transparent;
+    transition: all 0.7s ease;
+    white-space: nowrap;
+}
+
+.navbar-container .navbar-menu li a:hover,
+.navbar-container .navbar-menu li a.active {
+    color: #ffffff;
+    background: rgba(188, 212, 229, 0);
+    border: 2px solid #fff;
+}
+
+.navbar-toggle {
+    display: none;
+    background: transparent;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Responsive Styles */
+@media (max-width: 880px) {
+    .navbar {
+        backdrop-filter: none;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.219);
+    }
+
+    .navbar-container .navbar-menu {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    gap: 1.7rem !important;
+    position: fixed;
+    height: 100vh;
+    width: 250px;
+    top: 0;
+    right: -250px;
+    padding: 5rem 1.5rem;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 1);
+    backdrop-filter: blur(12px);
+    transition: all 0.5s ease-in-out;
+    z-index: 998;
   }
 
-  .navbar .nav-links ul li{
-  margin: 25px 0;
-}
-.navbar .logo {
-    position : absolute;
-    top:50px;
-    left: 50px;
-}
-.nav-links.mobile-menu{
-    margin-left: 0;
+    .navbar-container .navbar-menu.active {
+    right: 0; /* Slide the menu into view */
+  }
+
+    .navbar-toggle {
+        display: block;
+        z-index: 999;
+    }
+
+    .navbar-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .navbar-toggle.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .navbar-toggle.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
 }
 
+@media (max-width: 480px) {
+    .navbar-container {
+        padding: 0 1rem;
+    }
+
+    .navbar-logo {
+        font-size: 1.7rem;
+    }
+
+    .navbar-container .navbar-menu li a {
+        font-size: 1.2rem;
+        padding: 3px 15px;
+    }
 }
 
 
@@ -348,7 +398,6 @@ body {
 
 @media (max-width: 600px) {
     .carousel {
-        margin-top: 50px;
         height: 80vh;
     }
 
@@ -359,7 +408,7 @@ body {
 
     .carousel-item .title{
         font-size: clamp(14px, 4vw, 20px);
-        
+
     }
     .carousel-item .num {
         font-size: clamp(30px, 15vw, 50px);
