@@ -23,12 +23,12 @@ body {
 
 .image-container {
     column-count: 3; /* adapte le nombre de colonnes */
-    column-gap: 0;
+    column-gap: 1;
 }
 
 .image-container img {
     width: 100%;
-    margin-bottom: 0;
+    margin-bottom: 1rem;
     display: block;
     break-inside: avoid; /* important pour éviter les coupures */
     transition: transform 0.3s ease;
