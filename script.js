@@ -31,7 +31,7 @@ const displayItems = (item, index, active) => {
   // --y: Déplace les éléments verticalement. Réduit encore pour moins de diagonale.
   // --rot: Rotation des éléments. Réduit encore pour un alignement plus horizontal.
   item.style.setProperty('--x', `calc(${(index - active) * 80}%)`) // Ajusté à 80% comme demandé par l'utilisateur
-  item.style.setProperty('--y', `calc(${(index - active) * 0}%)`)   // Réduit de 50% à 10%
+  item.style.setProperty('--y', `calc(${(index - active) * 10}%)`)   // Réduit de 50% à 10%
   item.style.setProperty('--rot', `calc(${(index - active) * 5}deg)`) // Réduit de 20deg à 5deg
   item.style.setProperty('--opacity', `calc(${zIndex} / var(--items) * 3 - 2)`) // Garde l'opacité
 }

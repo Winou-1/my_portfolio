@@ -23,51 +23,52 @@ body {
 .container {
     padding: 2rem 5%;
 }
-
-.image-container {
-    column-count: 3; /* adapte le nombre de colonnes */
-    column-gap: 1;
-}
-
-/* Conteneur pour chaque image avec overflow hidden */
+/* Responsive image grid améliorée */
 .image-container {
     column-count: 3;
-    column-gap: 0.5rem;
+    column-gap: 1rem;
 }
 
 .image-wrapper {
-    display: block;
-    margin-bottom: 0.5rem;
-    overflow: hidden; /* cache la partie agrandie qui dépasse */
     break-inside: avoid;
+    overflow: hidden;
+    margin-bottom: 1rem;
 }
 
 .image-container img {
     width: 100%;
+    height: auto;
     display: block;
     transition: transform 0.3s ease;
     cursor: pointer;
+    border-radius: 10px;
 }
 
 .image-container img:hover {
-    transform: scale(1.05); /* zoom de 10% */
+    transform: scale(1.05);
 }
 
-.image-container img:active {
-    transform: scale(2); /* zoom de 5% lors du clic */
-}
-
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
     .image-container {
         column-count: 2;
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .image-container {
         column-count: 1;
+        padding: 0 1rem;
+    }
+
+    .image-wrapper {
+        margin-bottom: 1rem;
+    }
+
+    .image-container img:active {
+        transform: none; /* Supprime le zoom au clic sur mobile */
     }
 }
+
 
 
 
@@ -264,23 +265,30 @@ body {
   transition-duration: .7s;
 }
 
-/* Media query pour les écrans de taille moyenne (ex: tablettes) */
-@media (max-width: 900px) {
+/* Responsive carousel amélioré */
+@media (max-width: 1000px) {
     .carousel {
-        height: 60vh; /* Ajuste la hauteur du conteneur du carrousel */
+        height: 60vh;
     }
+
     .carousel-item {
-        --width: clamp(250px, 60vw, 300px);
-        --height: clamp(300px, 80vw, 400px); /* Hauteur minimale de 300px, hauteur maximale de 400px */
+        --width: clamp(200px, 60vw, 350px);
+        --height: clamp(250px, 70vw, 450px);
     }
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 600px) {
     .carousel {
-        height: 40vh; /* Ajuste la hauteur du conteneur du carrousel */
+        height: 50vh;
     }
+
     .carousel-item {
-        --width: clamp(500px, 120vw, 600px);
-        --height: clamp(600px, 160vw, 800px); /* Hauteur minimale de 300px, hauteur maximale de 400px */
+        --width: clamp(180px, 80vw, 300px);
+        --height: clamp(220px, 90vw, 400px);
+    }
+
+    .carousel-item .title,
+    .carousel-item .num {
+        font-size: clamp(14px, 4vw, 20px);
     }
 }
