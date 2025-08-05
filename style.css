@@ -261,7 +261,7 @@ body {
   transition-duration: .7s;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
     .carousel-item {
         /* Augmente la largeur et la hauteur du carrousel */
         --width: clamp(250px, 60vw, 300px);
