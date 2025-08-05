@@ -8,8 +8,6 @@
 body {
   font-family: 'Roboto', serif;
   background: linear-gradient(135deg, black, #272727);
-  /* Ajout pour empêcher le défilement horizontal indésirable */
-  overflow-x: hidden;
 }
 
 .header {
@@ -75,6 +73,7 @@ body {
 
 /*Caroussel paramètre*/
 .carousel {
+    overflow: hidden;
   position: relative;
   z-index: 1;
   height: 70vh;
@@ -85,9 +84,9 @@ body {
   --items: 10;
   --width: clamp(150px, 30vw,  300px);
   --height: clamp(200px, 40vw,  400px);
-  --x: calc(var(--active) * 800%); /* Cette valeur sera ajustée par JavaScript */
-  --y: calc(var(--active) * 200%); /* Cette valeur sera ajustée par JavaScript */
-  --rot: calc(var(--active) * 120deg); /* Cette valeur sera ajustée par JavaScript */
+  --x: calc(var(--active) * 800%);
+  --y: calc(var(--active) * 200%);
+  --rot: calc(var(--active) * 120deg);
   --opacity: calc(var(--zIndex) / var(--items) * 3 - 2);
   overflow: hidden;
   position: absolute;
