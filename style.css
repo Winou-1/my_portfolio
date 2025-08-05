@@ -74,10 +74,10 @@ body {
 /*Caroussel paramètre*/
 .carousel {
     overflow: hidden;
-  position: relative;
-  z-index: 1;
-  height: 70vh;
-  pointer-events: none;
+    position: relative;
+    z-index: 1;
+    height: 70vh; /* Hauteur par défaut pour les grands écrans */
+    pointer-events: none;
 }
 
 .carousel-item {
@@ -104,8 +104,9 @@ body {
   pointer-events: all;
   transform:  translate(var(--x), var(--y)) rotate(var(--rot)) ;
   transition: transform .8s cubic-bezier(0, 0.02, 0, 1);
+}
 
-  .carousel-box {
+.carousel-item .carousel-box { /* Séparé de .carousel-item */
     position: absolute;
     z-index: 1;
     top: 0;
@@ -115,20 +116,20 @@ body {
     transition: opacity .8s cubic-bezier(0, 0.02, 0, 1);
     opacity: var(--opacity);
     font-family: 'Orelo-sw-db', serif;
+}
 
-    &:before {
-      content: '';
-      position: absolute;
-      z-index: 1;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, .3), rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .5));
-    }
-  }
+.carousel-item .carousel-box:before { /* Séparé de .carousel-item */
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, .3), rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .5));
+}
 
-  .title {
+.carousel-item .title { /* Séparé de .carousel-item */
     position: absolute;
     z-index: 1;
     color: #fff;
@@ -137,9 +138,9 @@ body {
     transition: opacity .8s cubic-bezier(0, 0.02, 0, 1);
     font-size: clamp(20px, 3vw, 30px);
     text-shadow: 0 4px 4px rgba(0, 0, 0, .1);
-  }
+}
 
-  .num {
+.carousel-item .num { /* Séparé de .carousel-item */
     position: absolute;
     z-index: 1;
     color: #fff;
@@ -147,15 +148,15 @@ body {
     left: 20px;
     transition: opacity .8s cubic-bezier(0, 0.02, 0, 1);
     font-size: clamp(20px, 10vw, 80px);
-  }
+}
 
-  img {
+.carousel-item img { /* Séparé de .carousel-item */
     width: 100%;
     height: 100%;
     object-fit: cover;
     pointer-events: none;
-  }
 }
+
 
 .layout {
   position: absolute;
@@ -165,8 +166,9 @@ body {
   width: 100%;
   height: 100%;
   pointer-events: none;
+}
 
-  &:before {
+.layout:before { /* Séparé de .layout */
     content: '';
     position: absolute;
     z-index: 1;
@@ -178,9 +180,9 @@ body {
     border-top: none;
     border-bottom: none;
     opacity: .15;
-  }
+}
 
-  .box {
+.layout .box { /* Séparé de .layout */
     position: absolute;
     bottom: 0;
     left: 30px;
@@ -191,7 +193,6 @@ body {
     line-height: 1.4;
     text-transform: uppercase;
     opacity: .4;
-  }
 }
 
 .logo {
@@ -223,17 +224,17 @@ body {
   right: 25px;
   color: #fff;
   opacity: .4;
+}
 
-  a {
+.social a { /* Séparé de .social */
     display: inline-block;
     margin-left: 3px;
-  }
+}
 
-  svg {
+.social svg { /* Séparé de .social */
     --fill: #fff;
     width: 35px;
     height: 35px;
-  }
 }
 
 .cursor {
@@ -250,10 +251,12 @@ body {
   transition: transform .85s cubic-bezier(0, 0.02, 0, 1);
   display: none;
   pointer-events: none;
+}
   
-  @media (pointer: fine) {
-    display: block;
-  }
+@media (pointer: fine) { /* Séparé de .cursor */
+    .cursor {
+        display: block;
+    }
 }
 
 .cursor2 {
@@ -261,10 +264,13 @@ body {
   transition-duration: .7s;
 }
 
-@media (max-width: 900px) {
+/* Media query pour les écrans de taille moyenne (ex: tablettes) */
+@media (max-width: 1000px) {
+    .carousel {
+        height: 60vh; /* Ajuste la hauteur du conteneur du carrousel */
+    }
     .carousel-item {
-        /* Augmente la largeur et la hauteur du carrousel */
         --width: clamp(250px, 60vw, 300px);
-        --height: clamp(400px, 40vw, 100px);
+        --height: clamp(300px, 80vw, 400px); /* Hauteur minimale de 300px, hauteur maximale de 400px */
     }
 }
