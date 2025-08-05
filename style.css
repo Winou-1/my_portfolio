@@ -275,13 +275,12 @@ body {
     }
 }
 
-/* Media query pour les petits écrans (ex: téléphones) */
-@media (max-width: 600px) {
+@media (max-width: 1300px) {
     .carousel {
-        height: 65vh; /* Augmente la hauteur du conteneur du carrousel pour plus d'espace */
+        height: 60vh; /* Ajuste la hauteur du conteneur du carrousel */
     }
     .carousel-item {
-        --width: clamp(300px, 90vw, 450px); /* Plus large sur les petits écrans */
-        --height: clamp(400px, 100vw, 550px); /* Plus haut sur les petits écrans */
+        --width: clamp(250px, 60vw, 300px);
+        --height: clamp(300px, 80vw, 400px); /* Hauteur minimale de 300px, hauteur maximale de 400px */
     }
 }
