@@ -149,3 +149,21 @@ navbarToggle.addEventListener('click', () => {
     navbarMenu.classList.toggle('active');
     body.classList.toggle('menu-active'); // Toggle the body class
 });
+
+
+
+
+/*--------------------
+scroll
+--------------------*/
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible')}
+    else {
+      entry.target.classList.remove('visible')}
+    })}, {})
+    const todoelements = document.querySelectorAll('.image-wrapper');
+    todoelements.forEach((element) => {
+      observer.observe(element);
+    });
