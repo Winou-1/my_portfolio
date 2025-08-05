@@ -277,10 +277,10 @@ body {
 
 @media (max-width: 1300px) {
     .carousel {
-        height: 60vh; /* Ajuste la hauteur du conteneur du carrousel */
+        height: 40vh; /* Ajuste la hauteur du conteneur du carrousel */
     }
     .carousel-item {
-        --width: clamp(250px, 60vw, 300px);
-        --height: clamp(300px, 80vw, 400px); /* Hauteur minimale de 300px, hauteur maximale de 400px */
+        --width: clamp(500px, 120vw, 600px);
+        --height: clamp(600px, 160vw, 800px); /* Hauteur minimale de 300px, hauteur maximale de 400px */
     }
 }
