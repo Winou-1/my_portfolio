@@ -123,3 +123,14 @@ document.addEventListener('mouseup', handleMouseUp)
 document.addEventListener('touchstart', handleMouseDown)
 document.addEventListener('touchmove', handleMouseMove)
 document.addEventListener('touchend', handleMouseUp)
+
+
+/*--------------------
+navbar
+--------------------*/
+const menuHamburger = document.querySelector(".menu-hamburger")
+const navLinks = document.querySelector(".nav-links")
+ 
+menuHamburger.addEventListener('click',()=>{
+navLinks.classList.toggle('mobile-menu')
+})

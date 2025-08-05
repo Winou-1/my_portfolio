@@ -2,15 +2,30 @@
 <html>
 <head>
     <meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css" />
-    <script src="script.js" defer></script>
+    <script src="js/script.js" defer></script>
+	<script src="js/finisher-header.es5.min.js" type="text/javascript"></script>
     <title>mon portfolio</title>
 </head>
+<body>
 
-    <div class="header">
-        <h1>Mon Portfolio</h1>
-        <p>Bienvenue sur mon portfolio !</p>
-        </div>
+
+	<nav class="navbar">
+		<a href="#home" class ="logo"></a>
+		<div class="nav-links">
+			<ul>
+				<li><a href="#home">Accueil</a></li>
+				<li><a href="#about">À propos</a></li>
+				<li><a href="#projects">Projets</a></li>
+				<li><a href="#contact">Contact</a></li>
+			</ul>
+		</div>
+		<img src="img/menu-btn.png" alt="" class="menu-hamburger"/>
+	</nav>
+
+
+<div class="header finisher-header">
 <div class="carousel">
 	<div class="carousel-item">
 		<div class="carousel-box">
@@ -97,7 +112,7 @@
 <div class="layout">
 	<div class="box">High-end, full-service<br />visual content creation<br />for lifestyle branding.</div>
 </div>
-<body>
+
 <div class="cursor cursor2"></div>
     <div class ="container">
         <div class ="image-container">
@@ -116,5 +131,6 @@
             <div class ="image-wrapper"><img src="img/voiture/IMG_20230701_223224_417 (1).jpg" alt="" /></div>
         </div>
     </div>
+	</div>
 </body>
 </html>
