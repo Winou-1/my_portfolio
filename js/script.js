@@ -32,7 +32,6 @@ const closeButton = document.querySelector('.close-button');
 const prevArrow = document.querySelector('.prev-arrow');
 const nextArrow = document.querySelector('.next-arrow');
 const galleryImages = document.querySelectorAll('.image-container img'); // Toutes les images de la galerie
-let currentImageIndex = 0; // Index de l'image actuellement affichée dans la modale
 
 
 const displayItems = (item, index, active) => {
@@ -181,79 +180,131 @@ const observer = new IntersectionObserver((entries) => {
 Gallery Modal Functionality
 --------------------*/
 
-// Fonction pour ouvrir la modale avec l'image cliquée
+// Set the current image index to -1 on load to prevent any image from being loaded
+let currentImageIndex = -1;
+
+// Function to open the modal with the clicked image
 function openModal(imageSrc) {
-    galleryModal.style.display = 'flex'; // Afficher la modale
-    modalImage.src = imageSrc; // Définir la source de l'image modale
-    body.style.overflow = 'hidden'; // Empêcher le défilement du corps
+    galleryModal.style.display = 'flex'; // Display the modal
+    modalImage.src = imageSrc; // Set the source of the modal image
+    body.style.overflow = 'hidden'; // Prevent body scrolling
 
-    // Appliquer la transition d'opacité
-    modalImage.style.opacity = 0; // Mettre l'opacité à 0 avant d'afficher
+    // Fade in the image
     setTimeout(() => {
-        modalImage.style.opacity = 1; // Animer l'opacité à 1
-    }, 50); // Petit délai pour que le navigateur détecte le changement d'opacité initial
+        modalImage.style.opacity = 1;
+        modalImage.style.transform = 'scale(1)';
+    }, 50);
 }
 
-// Fonction pour fermer la modale
+// Function to close the modal
 function closeModal() {
-    modalImage.style.opacity = 0; // Déclencher la transition de sortie
+    modalImage.style.opacity = 0; // Trigger the fade-out transition
+    modalImage.style.transform = 'scale(0.9)'; // Trigger the scale-down transition
     setTimeout(() => {
-        galleryModal.style.display = 'none'; // Masquer la modale après la transition
-        body.style.overflow = 'auto'; // Rétablir le défilement du corps
-    }, 300); // Doit correspondre à la durée de la transition CSS
+        galleryModal.style.display = 'none'; // Hide the modal after the transition
+        body.style.overflow = 'auto'; // Re-enable body scrolling
+    }, 300); // This duration must match the CSS transition duration
 }
 
-// Fonction pour afficher l'image précédente
+// Function to show the previous image with a sliding animation
 function showPrevImage() {
-    modalImage.style.opacity = 0; // Déclencher la transition de sortie de l'image actuelle
+    modalImage.style.transform = 'translateX(100%)';
+    modalImage.style.opacity = 0;
+    
     setTimeout(() => {
         currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
         modalImage.src = galleryImages[currentImageIndex].src;
-        modalImage.style.opacity = 1; // Déclencher la transition d'entrée de la nouvelle image
-    }, 300); // Doit correspondre à la durée de la transition CSS
+        
+        modalImage.style.transition = 'none';
+        modalImage.style.transform = 'translateX(-100%)';
+
+        setTimeout(() => {
+            modalImage.style.transition = 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out';
+            modalImage.style.transform = 'translateX(0)';
+            modalImage.style.opacity = 1;
+        }, 20);
+        
+    }, 500);
 }
 
-// Fonction pour afficher l'image suivante
+// Function to show the next image with a sliding animation
 function showNextImage() {
-    modalImage.style.opacity = 0; // Déclencher la transition de sortie de l'image actuelle
+    // 1. First, slide the current image out to the left and fade it out
+    modalImage.style.transform = 'translateX(-100%)';
+    modalImage.style.opacity = 0;
+
+    // 2. After the current image has slid out, update the source and prepare the new image
     setTimeout(() => {
+        // Update to the next image source
         currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
         modalImage.src = galleryImages[currentImageIndex].src;
-        modalImage.style.opacity = 1; // Déclencher la transition d'entrée de la nouvelle image
-    }, 300); // Doit correspondre à la durée de la transition CSS
+        modalImage.style.transition = 'none';
+        modalImage.style.transform = 'translateX(100%)';// Position the new image off-screen to the right
+        setTimeout(() => {
+            // Re-enable the transition
+            modalImage.style.transition = 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out';
+            // Slide the new image into the center
+            modalImage.style.transform = 'translateX(0)';
+            modalImage.style.opacity = 1;
+        }, 20); // A very small delay is sufficient
+    }, 500); // This duration should be equal to or greater than the slide-out transition
 }
 
-// Écouteurs d'événements pour les images de la galerie
+// Event listeners for gallery images
 galleryImages.forEach((image, index) => {
     image.addEventListener('click', () => {
-        currentImageIndex = index; // Mettre à jour l'index de l'image actuelle
-        openModal(image.src); // Ouvrir la modale avec l'image cliquée
+        currentImageIndex = index; // Update the current image index
+        openModal(image.src); // Open the modal with the clicked image
     });
 });
 
-// Écouteur d'événement pour le bouton de fermeture
+// Event listener for the close button
 closeButton.addEventListener('click', closeModal);
 
-// Écouteurs d'événements pour les flèches de navigation
+// Event listeners for navigation arrows
 prevArrow.addEventListener('click', showPrevImage);
 nextArrow.addEventListener('click', showNextImage);
 
-// Fermer la modale en cliquant en dehors de l'image
+// Close the modal when clicking outside the image
 galleryModal.addEventListener('click', (e) => {
     if (e.target === galleryModal) {
         closeModal();
     }
 });
 
-// Navigation au clavier (flèches gauche/droite)
+// Keyboard navigation (left/right arrows) and close (Escape)
 document.addEventListener('keydown', (e) => {
-    if (galleryModal.style.display === 'flex') { // Seulement si la modale est ouverte
+    if (galleryModal.style.display === 'flex') {
         if (e.key === 'ArrowLeft') {
             showPrevImage();
         } else if (e.key === 'ArrowRight') {
             showNextImage();
-        } else if (e.key === 'Escape') { // Fermer avec la touche Échap
+        } else if (e.key === 'Escape') {
             closeModal();
         }
+    }
+});
+
+
+//empecher le téléchargement des photos
+document.addEventListener('contextmenu', function(e) {
+    if (e.target.tagName === 'IMG') {
+        e.preventDefault();
+    }
+});
+// Empêcher le glisser-déposer des images
+document.addEventListener('dragover', function(e) {
+    if (e.target.tagName === 'IMG') {
+        e.preventDefault();
+    }
+});
+document.addEventListener('drop', function(e) {
+    if (e.target.tagName === 'IMG') {
+        e.preventDefault();
+    }
+});
+document.addEventListener('dragstart', function(e) {
+    if (e.target.tagName === 'IMG') {
+        e.preventDefault();
     }
 });

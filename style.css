@@ -458,17 +458,17 @@ body {
 }
 
 /* Styles pour la modale de la galerie */
+/* Styles for the gallery modal */
 .gallery-modal {
-    display: none; /* Masqué par défaut */
-    position: fixed; /* Reste au-dessus de tout */
-    z-index: 1000; /* Z-index élevé pour être au premier plan */
+    display: none; /* Initially hidden */
+    position: fixed;
+    z-index: 1000;
     left: 0;
     top: 0;
-    width: 100%; /* Pleine largeur */
-    height: 100%; /* Pleine hauteur */
-    overflow: auto; /* Permet le défilement si l'image est trop grande */
-    background-color: rgba(0, 0, 0, 0.9); /* Fond noir semi-transparent */
-    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Added to prevent scrollbars during animation */
+    background-color: rgba(0, 0, 0, 0.9);
     justify-content: center;
     align-items: center;
 }
@@ -478,9 +478,10 @@ body {
     display: block;
     max-width: 90%;
     max-height: 90%;
-    object-fit: contain; /* Assure que l'image est contenue sans être coupée */
-    opacity: 0; /* Initialement invisible pour la transition */
-    transition: opacity 0.3s ease-in-out; /* Transition pour l'opacité */
+    object-fit: contain;
+    opacity: 0;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* Added transform to the transition */
+    transform: translateX(0); /* Default position */
 }
 
 /* Bouton de fermeture */
