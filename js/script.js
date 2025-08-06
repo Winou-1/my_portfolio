@@ -85,11 +85,11 @@ function drawImageOnCanvas(canvasElement, imageSrc) {
 
         // Set the canvas drawing buffer size to the calculated dimensions
         // This is crucial for "quality" as it determines the resolution of the pixels drawn
-        canvasElement.width = width;
-        canvasElement.height = height;
+        canvasElement.width = width*10;
+        canvasElement.height = height*10;
         
         // Draw the image on the canvas
-        ctx.drawImage(img, 0, 0, width, height);
+        ctx.drawImage(img, 0, 0, width*10, height*10);
     };
     img.src = imageSrc;
 }
