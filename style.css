@@ -541,5 +541,5 @@ body {
 }
 
 .prev-arrow:hover, .next-arrow:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0);
 }

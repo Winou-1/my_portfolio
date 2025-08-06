@@ -230,16 +230,8 @@ document.addEventListener('keydown', (e) => {
 });
 
 // Empêcher le clic droit et le glisser-déposer sur les canvas de la galerie
-document.querySelectorAll('.gallery-image-canvas').forEach(canvasElement => {
-    canvasElement.addEventListener('contextmenu', e => e.preventDefault());
-    canvasElement.addEventListener('dragstart', e => e.preventDefault());
-});
-
-// Empêcher le clic droit sur le canvas de la modale
-if (modalCanvas) {
-    modalCanvas.addEventListener('contextmenu', e => e.preventDefault());
-    modalCanvas.addEventListener('dragstart', e => e.preventDefault());
-}
+document.body.addEventListener('contextmenu', e => e.preventDefault());
+document.body.addEventListener('dragstart', e => e.preventDefault());
 
 /*--------------------
 Ajout des écouteurs d'événements de glissement (swipe) pour la galerie
