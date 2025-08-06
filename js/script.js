@@ -85,11 +85,11 @@ function drawImageOnCanvas(canvasElement, imageSrc) {
 
         // Set the canvas drawing buffer size to the calculated dimensions
         // This is crucial for "quality" as it determines the resolution of the pixels drawn
-        canvasElement.width = width*10;
-        canvasElement.height = height*10;
+        canvasElement.width = width*5;
+        canvasElement.height = height*5;
         
         // Draw the image on the canvas
-        ctx.drawImage(img, 0, 0, width*10, height*10);
+        ctx.drawImage(img, 0, 0, width*5, height*5);
     };
     img.src = imageSrc;
 }
@@ -196,11 +196,22 @@ galleryImageWrappers.forEach((wrapper, index) => {
     });
 });
 
-closeButton.addEventListener('click', closeModal);
-prevArrow.addEventListener('click', showPrevImage);
-nextArrow.addEventListener('click', showNextImage);
+// Ajout de e.stopPropagation() pour empêcher la propagation de l'événement de clic
+closeButton.addEventListener('click', (e) => {
+    e.stopPropagation(); 
+    closeModal();
+});
+prevArrow.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showPrevImage();
+});
+nextArrow.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showNextImage();
+});
 
 galleryModal.addEventListener('click', (e) => {
+    // Ferme la modale si le clic est sur l'arrière-plan de la modale (pas sur l'image ou les flèches)
     if (e.target === galleryModal) {
         closeModal();
     }
@@ -229,6 +240,36 @@ if (modalCanvas) {
     modalCanvas.addEventListener('contextmenu', e => e.preventDefault());
     modalCanvas.addEventListener('dragstart', e => e.preventDefault());
 }
+
+/*--------------------
+Ajout des écouteurs d'événements de glissement (swipe) pour la galerie
+--------------------*/
+let gallerySwipeStartX = 0;
+let gallerySwipeEndX = 0;
+const swipeThreshold = 30; // Définissez un seuil en pixels pour déclencher le swipe
+
+galleryModal.addEventListener('touchstart', (e) => {
+    gallerySwipeStartX = e.touches[0].clientX;
+    // Supprimez e.preventDefault() ici pour permettre aux clics de fonctionner.
+    // La propriété CSS touch-action: manipulation devrait gérer les comportements par défaut.
+}, { passive: true }); // Changez à { passive: true } car nous ne prévenons plus le défilement ici.
+
+galleryModal.addEventListener('touchend', (e) => {
+    gallerySwipeEndX = e.changedTouches[0].clientX;
+    const diffX = gallerySwipeStartX - gallerySwipeEndX;
+
+    if (Math.abs(diffX) > swipeThreshold) {
+        // Prévenir le comportement par défaut UNIQUEMENT si un swipe est détecté
+        e.preventDefault(); 
+        if (diffX > 0) {
+            // Swipe vers la gauche
+            showNextImage();
+        } else {
+            // Swipe vers la droite
+            showPrevImage();
+        }
+    }
+}, { passive: false }); // Gardez { passive: false } ici pour permettre preventDefault() si un swipe a lieu.
 
 /*--------------------
 Carrousel principal (inchangé)

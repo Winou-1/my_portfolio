@@ -9,6 +9,13 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 @keyframes gradient {
   0% { background-position: 0% }
@@ -471,6 +478,7 @@ body {
     background-color: rgba(0, 0, 0, 0.9);
     justify-content: center;
     align-items: center;
+    touch-action: manipulation; /* Ajouté pour améliorer la gestion tactile */
 }
 
 .modal-content {
@@ -494,6 +502,7 @@ body {
     font-weight: bold;
     transition: 0.3s;
     cursor: pointer;
+    touch-action: manipulation; /* Ajouté */
 }
 
 .close-button:hover,
@@ -518,6 +527,7 @@ body {
     border-radius: 0 3px 3px 0;
     user-select: none;
     -webkit-user-select: none;
+    touch-action: manipulation; /* Ajouté */
 }
 
 .prev-arrow {
