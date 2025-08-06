@@ -154,6 +154,7 @@ function showNextImage() {
         setTimeout(() => {
             modalCanvas.style.transition = 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out';
             modalCanvas.style.transform = 'translateX(0)';
+            modalCanvas.style.opacity = 1;
         }, 20);
     }, 500);
 }
