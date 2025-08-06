@@ -4,12 +4,13 @@
 /* Import Cinzel font */
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap');
-/* Reset simple */
+
+/* reset simple plus désactivation du surligange*/
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -17,6 +18,7 @@
     -ms-user-select: none;
     user-select: none;
 }
+
 @keyframes gradient {
   0% { background-position: 0% }
   100% { background-position: 100% }
@@ -105,7 +107,6 @@ body {
     transition: all 0.3s ease-in-out;
 }
 
-/* Responsive Styles */
 @media (max-width: 880px) {
     .navbar {
         backdrop-filter: none;
@@ -130,7 +131,7 @@ body {
   }
 
     .navbar-container .navbar-menu.active {
-    right: 0; /* Slide the menu into view */
+    right: 0;
   }
 
     .navbar-toggle {
@@ -166,15 +167,14 @@ body {
     }
 }
 
-
-
-
 .title {
   text-align: center;
   font-size: 2rem;
   margin-bottom: 2rem;
   letter-spacing: 1px;
 }
+
+
 
 /* Galerie */
 .image-container {
@@ -191,7 +191,7 @@ body {
 
 .image-wrapper {
   break-inside: avoid;
-  overflow: hidden; /* Important pour cacher le zoom qui dépasse */
+  overflow: hidden;
   margin-bottom: 1rem;
   border-radius: 12px;
   opacity: 0;
@@ -203,11 +203,10 @@ body {
 /* Style pour les éléments canvas dans la galerie */
 .gallery-image-canvas {
     width: 100%;
-    height: auto; /* Maintenir le ratio d'aspect */
+    height: auto;
     display: block;
     border-radius: 12px;
     cursor: pointer;
-    /* Appliquer la transition de transformation directement au canvas */
     transition: transform 0.4s ease;
 }
 
@@ -251,25 +250,25 @@ body {
     opacity: 0;
     transition: opacity 1s ease-in-out;
     pointer-events: none;
-    font-family: 'roboto'; /* Applique la police Cinzel */
+    font-family: 'roboto';
     width: 80%;
     max-width: 600px;
 }
 
 .main-carousel-title h1 {
-    font-size: clamp(2.5rem, 5vw, 4rem); /* Taille de police responsive */
+    font-size: clamp(2.5rem, 5vw, 4rem);
     margin-bottom: 1rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .main-carousel-title p {
-    font-size: clamp(1rem, 2vw, 1.5rem); /* Taille de police responsive */
+    font-size: clamp(1rem, 2vw, 1.5rem);
     line-height: 1.5;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .main-carousel-title.visible {
-    opacity: 1; /* Rendre visible */
+    opacity: 1; 
 }
 
 
@@ -278,7 +277,7 @@ body {
     overflow: hidden;
     position: relative;
     z-index: 1;
-    height: 95vh; /* Hauteur par défaut pour les grands écrans */
+    height: 95vh;
     pointer-events: none;
     margin-top: 50px;
 }
@@ -309,7 +308,7 @@ body {
   transition: transform .8s cubic-bezier(0, 0.02, 0, 1);
 }
 
-.carousel-item .carousel-box { /* Séparé de .carousel-item */
+.carousel-item .carousel-box {
     position: absolute;
     z-index: 1;
     top: 0;
@@ -321,7 +320,7 @@ body {
     font-family: 'Orelo-sw-db', serif;
 }
 
-.carousel-item .carousel-box:before { /* Séparé de .carousel-item */
+.carousel-item .carousel-box:before {
     content: '';
     position: absolute;
     z-index: 1;
@@ -332,7 +331,7 @@ body {
     background: linear-gradient(to bottom, rgba(0, 0, 0, .3), rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .5));
 }
 
-.carousel-item .title { /* Séparé de .carousel-item */
+.carousel-item .title {
     position: absolute;
     z-index: 1;
     color: #fff;
@@ -343,7 +342,7 @@ body {
     text-shadow: 0 4px 4px rgba(0, 0, 0, .1);
 }
 
-.carousel-item .num { /* Séparé de .carousel-item */
+.carousel-item .num { 
     position: absolute;
     z-index: 1;
     color: #fff;
@@ -353,7 +352,7 @@ body {
     font-size: clamp(20px, 10vw, 80px);
 }
 
-.carousel-item img { /* Séparé de .carousel-item */
+.carousel-item img { 
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -371,7 +370,7 @@ body {
   pointer-events: none;
 }
 
-.layout:before { /* Séparé de .layout */
+.layout:before { 
     content: '';
     position: absolute;
     z-index: 1;
@@ -385,7 +384,7 @@ body {
     opacity: .15;
 }
 
-.layout .box { /* Séparé de .layout */
+.layout .box {
     position: absolute;
     bottom: 0;
     left: 30px;
@@ -414,7 +413,7 @@ body {
   pointer-events: none;
 }
   
-@media (pointer: fine) { /* Séparé de .cursor */
+@media (pointer: fine) {
     .cursor {
         display: block;
     }
@@ -425,7 +424,7 @@ body {
   transition-duration: .7s;
 }
 
-/* Responsive carousel amélioré */
+/* Responsive carousel */
 @media (max-width: 1100px) {
     .carousel {
         height: 1000px;
@@ -467,18 +466,18 @@ body {
 
 /* Styles pour la modale de la galerie */
 .gallery-modal {
-    display: none; /* Initialement caché */
+    display: none;
     position: fixed;
     z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden; /* Empêche les barres de défilement pendant l'animation */
+    overflow: hidden;
     background-color: rgba(0, 0, 0, 0.9);
     justify-content: center;
     align-items: center;
-    touch-action: manipulation; /* Ajouté pour améliorer la gestion tactile */
+    touch-action: manipulation;
 }
 
 .modal-content {
@@ -489,7 +488,7 @@ body {
     object-fit: contain;
     opacity: 0;
     transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-    transform: translateX(0); /* Position par défaut */
+    transform: translateX(0); 
 }
 
 /* Bouton de fermeture */
@@ -502,7 +501,7 @@ body {
     font-weight: bold;
     transition: 0.3s;
     cursor: pointer;
-    touch-action: manipulation; /* Ajouté */
+    touch-action: manipulation; 
 }
 
 .close-button:hover,
@@ -527,7 +526,7 @@ body {
     border-radius: 0 3px 3px 0;
     user-select: none;
     -webkit-user-select: none;
-    touch-action: manipulation; /* Ajouté */
+    touch-action: manipulation; 
 }
 
 .prev-arrow {
