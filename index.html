@@ -125,19 +125,21 @@
 <div class="cursor cursor2"></div>
     <div class ="container">
         <div class ="image-container">
-            <div class ="image-wrapper"><img src="img/voiture/compressed/675lt.jpg" alt="" /></div>
-            <div class ="image-wrapper"><img src="img/voiture/compressed/720s.jpg" alt="" /></div>
-            <div class ="image-wrapper"><img src="img/voiture/compressed/812_GTS.jpg" alt="" /></div>
-            <div class ="image-wrapper"><img src="img/voiture/compressed/812_superfast.jpg" alt="" /></div>
-            <div class ="image-wrapper"><img src="img/voiture/compressed/amg_gtr_bleu.jpg" alt="" /></div>
-            <div class ="image-wrapper"><img src="img/voiture/compressed/chiron.jpg" alt="" /></div>
-            <div class ="image-wrapper"><img src="img/voiture/compressed/chiron.jpg" alt="" /></div>
-            <div class ="image-wrapper"><img src="img/voiture/compressed/chironDSC01559.jpg" alt="" /></div>
-            <div class ="image-wrapper"><img src="img/voiture/compressed/chironDSC01700.jpg" alt="" /></div>
-            <div class ="image-wrapper"><img src="img/voiture/compressed/chironDSC01850.jpg" alt="" /></div>
-            <div class ="image-wrapper"><img src="img/voiture/compressed/chironDSC01850.jpg" alt="" /></div>
-            <div class ="image-wrapper"><img src="img/voiture/huracan_perf_2.jpg" alt="" /></div>
-            <div class ="image-wrapper"><img src="img/voiture/IMG_20230701_223224_417 (1).jpg" alt="" /></div>
+            <!-- Remplacer les balises <img> par des <canvas> et utiliser data-src sur le wrapper -->
+            <!-- Suppression de la div .image-overlay -->
+            <div class ="image-wrapper" data-src="img/voiture/compressed/675lt.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+            <div class ="image-wrapper" data-src="img/voiture/compressed/720s.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+            <div class ="image-wrapper" data-src="img/voiture/compressed/812_GTS.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+            <div class ="image-wrapper" data-src="img/voiture/compressed/812_superfast.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+            <div class ="image-wrapper" data-src="img/voiture/compressed/amg_gtr_bleu.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+            <div class ="image-wrapper" data-src="img/voiture/compressed/chiron.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+            <div class ="image-wrapper" data-src="img/voiture/compressed/chiron.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+            <div class ="image-wrapper" data-src="img/voiture/compressed/chironDSC01559.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+            <div class ="image-wrapper" data-src="img/voiture/compressed/chironDSC01700.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+            <div class ="image-wrapper" data-src="img/voiture/compressed/chironDSC01850.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+            <div class ="image-wrapper" data-src="img/voiture/compressed/chironDSC01850.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+            <div class ="image-wrapper" data-src="img/voiture/huracan_perf_2.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+            <div class ="image-wrapper" data-src="img/voiture/IMG_20230701_223224_417 (1).jpg"><canvas class="gallery-image-canvas"></canvas></div>
         </div>
     </div>
 	</div>
@@ -145,7 +147,8 @@
     <!-- Modale de la galerie d'images -->
     <div id="galleryModal" class="gallery-modal">
         <span class="close-button">&times;</span>
-        <img class="modal-content" id="modalImage">
+        <!-- Canvas pour l'image de la modale -->
+        <canvas id="modalCanvas" class="modal-content"></canvas>
         <a class="prev-arrow">&#10094;</a>
         <a class="next-arrow">&#10095;</a>
     </div>

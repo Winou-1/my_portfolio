@@ -27,38 +27,229 @@ const mainCarouselTitle = document.getElementById('mainCarouselTitle');
 
 // Éléments de la modale de la galerie
 const galleryModal = document.getElementById('galleryModal');
-const modalImage = document.getElementById('modalImage');
 const closeButton = document.querySelector('.close-button');
 const prevArrow = document.querySelector('.prev-arrow');
 const nextArrow = document.querySelector('.next-arrow');
-const galleryImages = document.querySelectorAll('.image-container img'); // Toutes les images de la galerie
+// Ciblez les wrappers d'images pour la galerie
+const galleryImageWrappers = document.querySelectorAll('.image-wrapper'); 
+// galleryImages n'est plus utilisé directement pour les sources, on utilise data-src des wrappers
+let currentImageIndex = -1;
+const body = document.body;
+
+// Éléments du canvas
+const modalCanvas = document.getElementById('modalCanvas');
+const ctx = modalCanvas.getContext('2d');
+
+/*--------------------
+Fonctions de la galerie
+--------------------*/
+
+// Fonction pour dessiner une image sur un canvas spécifique
+function drawImageOnCanvas(canvasElement, imageSrc) {
+    const img = new Image();
+    img.onload = function() {
+        const ctx = canvasElement.getContext('2d');
+        ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+
+        let width = img.naturalWidth;
+        let height = img.naturalHeight;
+
+        // Calculate aspect ratio to fit image within canvas boundaries
+        // This logic applies to both modal and gallery canvases
+        let targetWidth, targetHeight;
+
+        if (canvasElement.id === 'modalCanvas') {
+            // For the modal, fit to 90% of window size
+            targetWidth = window.innerWidth * 0.9;
+            targetHeight = window.innerHeight * 0.9;
+        } else {
+            // For gallery images, fit to parent wrapper's current dimensions
+            const parent = canvasElement.parentElement;
+            targetWidth = parent.offsetWidth;
+            targetHeight = parent.offsetHeight;
+        }
+
+        // Adjust dimensions to fit within target boundaries while maintaining aspect ratio
+        const aspectRatio = width / height;
+        const targetAspectRatio = targetWidth / targetHeight;
+
+        if (aspectRatio > targetAspectRatio) {
+            // Image is wider than target area, fit to width
+            width = targetWidth;
+            height = width / aspectRatio;
+        } else {
+            // Image is taller than target area, fit to height
+            height = targetHeight;
+            width = height * aspectRatio;
+        }
+
+        // Set the canvas drawing buffer size to the calculated dimensions
+        // This is crucial for "quality" as it determines the resolution of the pixels drawn
+        canvasElement.width = width;
+        canvasElement.height = height;
+        
+        // Draw the image on the canvas
+        ctx.drawImage(img, 0, 0, width, height);
+    };
+    img.src = imageSrc;
+}
+
+// Fonction pour charger et dessiner toutes les images de la galerie au chargement
+function loadAndDrawAllGalleryImages() {
+    galleryImageWrappers.forEach(wrapper => {
+        const imageSrc = wrapper.dataset.src; // Récupère la source de l'image depuis data-src
+        const canvasElement = wrapper.querySelector('.gallery-image-canvas');
+        if (imageSrc && canvasElement) {
+            drawImageOnCanvas(canvasElement, imageSrc);
+        }
+    });
+}
+
+// Appeler cette fonction au chargement de la page
+window.addEventListener('load', loadAndDrawAllGalleryImages);
+
+// Écouteur pour redessiner les images de la galerie si la fenêtre est redimensionnée
+window.addEventListener('resize', () => {
+    loadAndDrawAllGalleryImages(); // Redessine toutes les images de la galerie
+    // Si la modale est ouverte, redessiner aussi l'image de la modale
+    if (galleryModal.style.display === 'flex') {
+        const imageSrc = galleryImageWrappers[currentImageIndex].dataset.src;
+        drawImageOnCanvas(modalCanvas, imageSrc);
+    }
+});
 
 
-const displayItems = (item, index, active) => {
-  const zIndex = getZindex([...$items], active)[index]
-  item.style.setProperty('--zIndex', zIndex)
-  // Ajustement des valeurs pour un affichage plus horizontal et plusieurs éléments visibles
-  // --x: Déplace les éléments horizontalement. Réduit pour afficher plus d'éléments.
-  // --y: Déplace les éléments verticalement. Réduit encore pour moins de diagonale.
-  // --rot: Rotation des éléments. Réduit encore pour un alignement plus horizontal.
-  item.style.setProperty('--x', `calc(${(index - active) * 80}%)`) // Ajusté à 80% comme demandé par l'utilisateur
-  item.style.setProperty('--y', `calc(${(index - active) * 10}%)`)   // Réduit de 50% à 10%
-  item.style.setProperty('--rot', `calc(${(index - active) * 5}deg)`) // Réduit de 20deg à 5deg
-  item.style.setProperty('--opacity', `calc(${zIndex} / var(--items) * 3 - 2)`) // Garde l'opacité
+function openModal(imageSrc) {
+    galleryModal.style.display = 'flex';
+    drawImageOnCanvas(modalCanvas, imageSrc); // Dessine sur le canvas de la modale
+    body.style.overflow = 'hidden';
+
+    setTimeout(() => {
+        modalCanvas.style.opacity = 1;
+        modalCanvas.style.transform = 'scale(1)';
+    }, 50);
+}
+
+function closeModal() {
+    modalCanvas.style.opacity = 0;
+    modalCanvas.style.transform = 'scale(0.9)';
+    setTimeout(() => {
+        galleryModal.style.display = 'none';
+        body.style.overflow = 'auto';
+    }, 300);
+}
+
+function showPrevImage() {
+    modalCanvas.style.transform = 'translateX(100%)'; // Slide the current image out to the right
+    modalCanvas.style.opacity = 0;
+    
+    setTimeout(() => {
+        currentImageIndex = (currentImageIndex - 1 + galleryImageWrappers.length) % galleryImageWrappers.length;
+        // Récupère la source de l'image du wrapper correspondant
+        const imageSrc = galleryImageWrappers[currentImageIndex].dataset.src;
+        drawImageOnCanvas(modalCanvas, imageSrc); // Dessine sur le canvas de la modale
+        
+        modalCanvas.style.transition = 'none'; // Temporarily disable transition
+        modalCanvas.style.transform = 'translateX(-100%)'; // Position new image off-screen left
+
+        setTimeout(() => {
+            modalCanvas.style.transition = 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out'; // Re-enable transition
+            modalCanvas.style.transform = 'translateX(0)'; // Slide new image into center
+            modalCanvas.style.opacity = 1;
+        }, 20); // Small delay to force re-render
+        
+    }, 500); // Duration matches CSS transition for slide-out
+}
+
+function showNextImage() {
+    modalCanvas.style.transform = 'translateX(-100%)'; // Slide the current image out to the left
+    modalCanvas.style.opacity = 0;
+
+    setTimeout(() => {
+        currentImageIndex = (currentImageIndex + 1) % galleryImageWrappers.length;
+        // Récupère la source de l'image du wrapper correspondant
+        const imageSrc = galleryImageWrappers[currentImageIndex].dataset.src;
+        drawImageOnCanvas(modalCanvas, imageSrc); // Dessine sur le canvas de la modale
+
+        modalCanvas.style.transition = 'none'; // Temporarily disable transition
+        modalCanvas.style.transform = 'translateX(100%)'; // Position new image off-screen right
+
+        setTimeout(() => {
+            modalCanvas.style.transition = 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out'; // Re-enable transition
+            modalCanvas.style.transform = 'translateX(0)'; // Slide new image into center
+            modalCanvas.style.opacity = 1;
+        }, 20); // Small delay to force re-render
+    }, 500); // Duration matches CSS transition for slide-out
+}
+
+
+/*--------------------
+Event Listeners
+--------------------*/
+// Attachez l'écouteur de clic aux wrappers d'images
+galleryImageWrappers.forEach((wrapper, index) => {
+    wrapper.addEventListener('click', () => {
+        currentImageIndex = index;
+        // Récupère la source de l'image depuis data-src
+        const imageSrc = wrapper.dataset.src; 
+        openModal(imageSrc);
+    });
+});
+
+closeButton.addEventListener('click', closeModal);
+prevArrow.addEventListener('click', showPrevImage);
+nextArrow.addEventListener('click', showNextImage);
+
+galleryModal.addEventListener('click', (e) => {
+    if (e.target === galleryModal) {
+        closeModal();
+    }
+});
+
+document.addEventListener('keydown', (e) => {
+    if (galleryModal.style.display === 'flex') {
+        if (e.key === 'ArrowLeft') {
+            showPrevImage();
+        } else if (e.key === 'ArrowRight') {
+            showNextImage();
+        } else if (e.key === 'Escape') {
+            closeModal();
+        }
+    }
+});
+
+// Empêcher le clic droit et le glisser-déposer sur les canvas de la galerie
+document.querySelectorAll('.gallery-image-canvas').forEach(canvasElement => {
+    canvasElement.addEventListener('contextmenu', e => e.preventDefault());
+    canvasElement.addEventListener('dragstart', e => e.preventDefault());
+});
+
+// Empêcher le clic droit sur le canvas de la modale
+if (modalCanvas) {
+    modalCanvas.addEventListener('contextmenu', e => e.preventDefault());
+    modalCanvas.addEventListener('dragstart', e => e.preventDefault());
 }
 
 /*--------------------
-Animate
+Carrousel principal (inchangé)
 --------------------*/
+const displayItems = (item, index, active) => {
+  const zIndex = getZindex([...$items], active)[index]
+  item.style.setProperty('--zIndex', zIndex)
+  item.style.setProperty('--x', `calc(${(index - active) * 80}%)`)
+  item.style.setProperty('--y', `calc(${(index - active) * 10}%)`)
+  item.style.setProperty('--rot', `calc(${(index - active) * 5}deg)`)
+  item.style.setProperty('--opacity', `calc(${zIndex} / var(--items) * 3 - 2)`)
+}
+
 const animate = () => {
   progress = Math.max(0, Math.min(progress, 100))
   active = Math.floor(progress/100*($items.length-1))
   
   $items.forEach((item, index) => displayItems(item, index, active))
 
-  // Logique pour afficher/masquer le titre principal
   if (mainCarouselTitle) {
-    if (active === 4) { // Si la première slide est active
+    if (active === 4) { 
       mainCarouselTitle.classList.add('visible');
     } else {
       mainCarouselTitle.classList.remove('visible');
@@ -67,43 +258,32 @@ const animate = () => {
 }
 animate()
 
-/*--------------------
-Click on Items
---------------------*/
 $items.forEach((item, i) => {
   item.addEventListener('click', () => {
-    // Vérifie si l'élément cliqué est l'élément actif (au centre)
     if (i === active) {
-      // Redirection vers une autre page quand l'élément actif est cliqué
-      // Vous pouvez personnaliser ces URLs pour chaque élément du carrousel
       const targetPages = [
-        "page1.html", // URL pour le premier élément (Paris)
-        "page2.html", // URL pour le deuxième élément (Warsaw)
-        "page3.html", // URL pour le troisième élément (Madrid)
-        "page4.html", // URL pour le quatrième élément (Sydney)
-        "page5.html", // URL pour le cinquième élément (Istanbul)
-        "page6.html", // URL pour le sixième élément (Prague)
-        "page7.html", // URL pour le septième élément (Munich)
-        "page8.html", // URL pour le huitième élément (Venice)
-        "page9.html", // URL pour le neuvième élément (Oslo)
-        "page10.html" // URL pour le dixième élément (London)
-        // Ajoutez plus d'URLs si vous avez plus d'éléments dans votre carrousel
+        "page1.html", 
+        "page2.html", 
+        "page3.html", 
+        "page4.html", 
+        "page5.html", 
+        "page6.html", 
+        "page7.html", 
+        "page8.html", 
+        "page9.html", 
+        "page10.html"
       ];
 
       if (targetPages[i]) {
         window.location.href = targetPages[i];
       }
     } else {
-      // Si l'élément cliqué n'est pas l'élément actif, déplace le carrousel vers cet élément
-      progress = (i / ($items.length - 1)) * 100; // Calcule la progression pour centrer l'élément
+      progress = (i / ($items.length - 1)) * 100;
       animate();
     }
   })
 })
 
-/*--------------------
-Handlers
---------------------*/
 const handleWheel = e => {
   const wheelProgress = e.deltaY * speedWheel
   progress = progress + wheelProgress
@@ -133,9 +313,6 @@ const handleMouseUp = () => {
   isDown = false
 }
 
-/*--------------------
-Listeners
---------------------*/
 document.addEventListener('mousewheel', handleWheel)
 document.addEventListener('mousedown', handleMouseDown)
 document.addEventListener('mousemove', handleMouseMove)
@@ -144,26 +321,15 @@ document.addEventListener('touchstart', handleMouseDown)
 document.addEventListener('touchmove', handleMouseMove)
 document.addEventListener('touchend', handleMouseUp)
 
-
-/*--------------------
-navbar
---------------------*/
 const navbarToggle = document.querySelector('.navbar-toggle');
 const navbarMenu = document.querySelector('.navbar-menu');
-const body = document.body; // Select the body element
 
 navbarToggle.addEventListener('click', () => {
     navbarToggle.classList.toggle('active');
     navbarMenu.classList.toggle('active');
-    body.classList.toggle('menu-active'); // Toggle the body class
+    body.classList.toggle('menu-active');
 });
 
-
-
-
-/*--------------------
-scroll
---------------------*/
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -175,136 +341,3 @@ const observer = new IntersectionObserver((entries) => {
     todoelements.forEach((element) => {
       observer.observe(element);
     });
-
-/*--------------------
-Gallery Modal Functionality
---------------------*/
-
-// Set the current image index to -1 on load to prevent any image from being loaded
-let currentImageIndex = -1;
-
-// Function to open the modal with the clicked image
-function openModal(imageSrc) {
-    galleryModal.style.display = 'flex'; // Display the modal
-    modalImage.src = imageSrc; // Set the source of the modal image
-    body.style.overflow = 'hidden'; // Prevent body scrolling
-
-    // Fade in the image
-    setTimeout(() => {
-        modalImage.style.opacity = 1;
-        modalImage.style.transform = 'scale(1)';
-    }, 50);
-}
-
-// Function to close the modal
-function closeModal() {
-    modalImage.style.opacity = 0; // Trigger the fade-out transition
-    modalImage.style.transform = 'scale(0.9)'; // Trigger the scale-down transition
-    setTimeout(() => {
-        galleryModal.style.display = 'none'; // Hide the modal after the transition
-        body.style.overflow = 'auto'; // Re-enable body scrolling
-    }, 300); // This duration must match the CSS transition duration
-}
-
-// Function to show the previous image with a sliding animation
-function showPrevImage() {
-    modalImage.style.transform = 'translateX(100%)';
-    modalImage.style.opacity = 0;
-    
-    setTimeout(() => {
-        currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
-        modalImage.src = galleryImages[currentImageIndex].src;
-        
-        modalImage.style.transition = 'none';
-        modalImage.style.transform = 'translateX(-100%)';
-
-        setTimeout(() => {
-            modalImage.style.transition = 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out';
-            modalImage.style.transform = 'translateX(0)';
-            modalImage.style.opacity = 1;
-        }, 20);
-        
-    }, 500);
-}
-
-// Function to show the next image with a sliding animation
-function showNextImage() {
-    // 1. First, slide the current image out to the left and fade it out
-    modalImage.style.transform = 'translateX(-100%)';
-    modalImage.style.opacity = 0;
-
-    // 2. After the current image has slid out, update the source and prepare the new image
-    setTimeout(() => {
-        // Update to the next image source
-        currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
-        modalImage.src = galleryImages[currentImageIndex].src;
-        modalImage.style.transition = 'none';
-        modalImage.style.transform = 'translateX(100%)';// Position the new image off-screen to the right
-        setTimeout(() => {
-            // Re-enable the transition
-            modalImage.style.transition = 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out';
-            // Slide the new image into the center
-            modalImage.style.transform = 'translateX(0)';
-            modalImage.style.opacity = 1;
-        }, 20); // A very small delay is sufficient
-    }, 500); // This duration should be equal to or greater than the slide-out transition
-}
-
-// Event listeners for gallery images
-galleryImages.forEach((image, index) => {
-    image.addEventListener('click', () => {
-        currentImageIndex = index; // Update the current image index
-        openModal(image.src); // Open the modal with the clicked image
-    });
-});
-
-// Event listener for the close button
-closeButton.addEventListener('click', closeModal);
-
-// Event listeners for navigation arrows
-prevArrow.addEventListener('click', showPrevImage);
-nextArrow.addEventListener('click', showNextImage);
-
-// Close the modal when clicking outside the image
-galleryModal.addEventListener('click', (e) => {
-    if (e.target === galleryModal) {
-        closeModal();
-    }
-});
-
-// Keyboard navigation (left/right arrows) and close (Escape)
-document.addEventListener('keydown', (e) => {
-    if (galleryModal.style.display === 'flex') {
-        if (e.key === 'ArrowLeft') {
-            showPrevImage();
-        } else if (e.key === 'ArrowRight') {
-            showNextImage();
-        } else if (e.key === 'Escape') {
-            closeModal();
-        }
-    }
-});
-
-
-//empecher le téléchargement des photos
-document.addEventListener('contextmenu', function(e) {
-    if (e.target.tagName === 'IMG') {
-        e.preventDefault();
-    }
-});
-// Empêcher le glisser-déposer des images
-document.addEventListener('dragover', function(e) {
-    if (e.target.tagName === 'IMG') {
-        e.preventDefault();
-    }
-});
-document.addEventListener('drop', function(e) {
-    if (e.target.tagName === 'IMG') {
-        e.preventDefault();
-    }
-});
-document.addEventListener('dragstart', function(e) {
-    if (e.target.tagName === 'IMG') {
-        e.preventDefault();
-    }
-});
