@@ -162,7 +162,6 @@ body {
 
 
 
-
 .title {
   text-align: center;
   font-size: 2rem;
@@ -179,7 +178,7 @@ body {
 
 .image-wrapper.visible{
     opacity: 1;
-    translate: 0;
+    scale : 1;
 }
 
 
@@ -189,8 +188,8 @@ body {
   margin-bottom: 1rem;
   border-radius: 12px;
   opacity: 0;
-  translate:-50%;
   transition: 600ms ease;
+  scale: 0.8;
 }
 
 .image-wrapper img {
@@ -437,7 +436,7 @@ body {
 
 @media (max-width: 600px) {
     .main-carousel-title {
-        top: 22%
+        top: 27%
     }
     .carousel {
         height: 80vh;
@@ -456,4 +455,80 @@ body {
     .carousel-item .num {
         font-size: clamp(30px, 15vw, 50px);
     }
+}
+
+/* Styles pour la modale de la galerie */
+.gallery-modal {
+    display: none; /* Masqué par défaut */
+    position: fixed; /* Reste au-dessus de tout */
+    z-index: 1000; /* Z-index élevé pour être au premier plan */
+    left: 0;
+    top: 0;
+    width: 100%; /* Pleine largeur */
+    height: 100%; /* Pleine hauteur */
+    overflow: auto; /* Permet le défilement si l'image est trop grande */
+    background-color: rgba(0, 0, 0, 0.9); /* Fond noir semi-transparent */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain; /* Assure que l'image est contenue sans être coupée */
+    opacity: 0; /* Initialement invisible pour la transition */
+    transition: opacity 0.3s ease-in-out; /* Transition pour l'opacité */
+}
+
+/* Bouton de fermeture */
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Flèches de navigation */
+.prev-arrow, .next-arrow {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -50px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.prev-arrow {
+    left: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.next-arrow {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev-arrow:hover, .next-arrow:hover {
+    background-color: rgba(0, 0, 0, 0.8);
 }

@@ -25,6 +25,15 @@ const $cursors = document.querySelectorAll('.cursor')
 // Référence au nouveau titre du carrousel
 const mainCarouselTitle = document.getElementById('mainCarouselTitle');
 
+// Éléments de la modale de la galerie
+const galleryModal = document.getElementById('galleryModal');
+const modalImage = document.getElementById('modalImage');
+const closeButton = document.querySelector('.close-button');
+const prevArrow = document.querySelector('.prev-arrow');
+const nextArrow = document.querySelector('.next-arrow');
+const galleryImages = document.querySelectorAll('.image-container img'); // Toutes les images de la galerie
+let currentImageIndex = 0; // Index de l'image actuellement affichée dans la modale
+
 
 const displayItems = (item, index, active) => {
   const zIndex = getZindex([...$items], active)[index]
@@ -167,3 +176,84 @@ const observer = new IntersectionObserver((entries) => {
     todoelements.forEach((element) => {
       observer.observe(element);
     });
+
+/*--------------------
+Gallery Modal Functionality
+--------------------*/
+
+// Fonction pour ouvrir la modale avec l'image cliquée
+function openModal(imageSrc) {
+    galleryModal.style.display = 'flex'; // Afficher la modale
+    modalImage.src = imageSrc; // Définir la source de l'image modale
+    body.style.overflow = 'hidden'; // Empêcher le défilement du corps
+
+    // Appliquer la transition d'opacité
+    modalImage.style.opacity = 0; // Mettre l'opacité à 0 avant d'afficher
+    setTimeout(() => {
+        modalImage.style.opacity = 1; // Animer l'opacité à 1
+    }, 50); // Petit délai pour que le navigateur détecte le changement d'opacité initial
+}
+
+// Fonction pour fermer la modale
+function closeModal() {
+    modalImage.style.opacity = 0; // Déclencher la transition de sortie
+    setTimeout(() => {
+        galleryModal.style.display = 'none'; // Masquer la modale après la transition
+        body.style.overflow = 'auto'; // Rétablir le défilement du corps
+    }, 300); // Doit correspondre à la durée de la transition CSS
+}
+
+// Fonction pour afficher l'image précédente
+function showPrevImage() {
+    modalImage.style.opacity = 0; // Déclencher la transition de sortie de l'image actuelle
+    setTimeout(() => {
+        currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+        modalImage.src = galleryImages[currentImageIndex].src;
+        modalImage.style.opacity = 1; // Déclencher la transition d'entrée de la nouvelle image
+    }, 300); // Doit correspondre à la durée de la transition CSS
+}
+
+// Fonction pour afficher l'image suivante
+function showNextImage() {
+    modalImage.style.opacity = 0; // Déclencher la transition de sortie de l'image actuelle
+    setTimeout(() => {
+        currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+        modalImage.src = galleryImages[currentImageIndex].src;
+        modalImage.style.opacity = 1; // Déclencher la transition d'entrée de la nouvelle image
+    }, 300); // Doit correspondre à la durée de la transition CSS
+}
+
+// Écouteurs d'événements pour les images de la galerie
+galleryImages.forEach((image, index) => {
+    image.addEventListener('click', () => {
+        currentImageIndex = index; // Mettre à jour l'index de l'image actuelle
+        openModal(image.src); // Ouvrir la modale avec l'image cliquée
+    });
+});
+
+// Écouteur d'événement pour le bouton de fermeture
+closeButton.addEventListener('click', closeModal);
+
+// Écouteurs d'événements pour les flèches de navigation
+prevArrow.addEventListener('click', showPrevImage);
+nextArrow.addEventListener('click', showNextImage);
+
+// Fermer la modale en cliquant en dehors de l'image
+galleryModal.addEventListener('click', (e) => {
+    if (e.target === galleryModal) {
+        closeModal();
+    }
+});
+
+// Navigation au clavier (flèches gauche/droite)
+document.addEventListener('keydown', (e) => {
+    if (galleryModal.style.display === 'flex') { // Seulement si la modale est ouverte
+        if (e.key === 'ArrowLeft') {
+            showPrevImage();
+        } else if (e.key === 'ArrowRight') {
+            showNextImage();
+        } else if (e.key === 'Escape') { // Fermer avec la touche Échap
+            closeModal();
+        }
+    }
+});
