@@ -185,3 +185,55 @@ document.querySelectorAll('.navbar-menu a').forEach(link => {
         navbarMenu.classList.remove('active');
     });
 });
+
+
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger);
+// Utility functions
+function mapRange(value, inMin, inMax, outMin, outMax) {
+    return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+}
+function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+}
+
+
+
+// Logic for page transition on exit
+const pageTransition = document.getElementById('page-transition');
+const body = document.body;
+
+// Remove the transition class on page load
+window.addEventListener('pageshow', (event) => {
+    pageTransition.classList.remove('is-active');
+    body.classList.remove('is-transitioning');
+});
+
+document.addEventListener('click', (e) => {
+    // Check if the clicked element is an internal link.
+    const link = e.target.closest('a');
+    if (link && link.href) {
+        // Check if it's an internal link and not a hash link
+        if (link.hostname === window.location.hostname && !link.hash) {
+            // Prevent default navigation
+            e.preventDefault();
+
+            // Add a class to the body and transition overlay to start the fade-out
+            pageTransition.classList.add('is-active');
+            body.classList.add('is-transitioning');
+            
+            // Navigate to the new page after the transition
+            setTimeout(() => {
+                window.location.href = link.href;
+            }, 500); // This duration should match the CSS transition duration
+        } else if (link.hash) {
+            // Handle internal anchor links without a transition
+            const targetElement = document.querySelector(link.hash);
+            if (targetElement) {
+                e.preventDefault();
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        // For external links, do nothing and let the browser navigate normally
+    }
+});

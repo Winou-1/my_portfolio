@@ -362,3 +362,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000); // Wait for the loader to fade out (1s)
     }, 4500); // Total animation time (max animation duration + fill duration)
 });
+
+const pageTransition = document.getElementById('page-transition');
+const bodyy = document.body;
+
+// Remove the transition on page load
+window.addEventListener('pageshow', (event) => {
+    pageTransition.classList.remove('is-active');
+    bodyy.classList.remove('is-transitioning');
+});
+
+document.addEventListener('click', (e) => {
+    // Check if the clicked element is an internal link.
+    const link = e.target.closest('a');
+    if (link && link.href) {
+        // Check if it's an internal link and not a hash link
+        if (link.hostname === window.location.hostname && !link.hash) {
+            // Prevent default navigation
+            e.preventDefault();
+
+            // Add a class to the body and transition overlay to start the fade-out
+            pageTransition.classList.add('is-active');
+            bodyy.classList.add('is-transitioning');
+            
+            // Navigate to the new page after the transition
+            setTimeout(() => {
+                window.location.href = link.href;
+            }, 500); // This duration should match the CSS transition duration
+        } else if (link.hash) {
+            // Handle internal anchor links without a transition
+            const targetElement = document.querySelector(link.hash);
+            if (targetElement) {
+                e.preventDefault();
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        // For external links, do nothing and let the browser navigate normally
+    }
+});
