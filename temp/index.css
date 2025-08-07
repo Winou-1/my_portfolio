@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .image{
+        -webkit-mask-image: url('./img/voiture/compressed/pista_(0).jpg');
+    }
+}

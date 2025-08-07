@@ -1,481 +1,88 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <title>Scrolly Images - GSAP Parallax</title>
     <style>
-        /* Base styles from both files, merged and refined */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #09090b;
-            color: white;
-            /* Masquer le défilement par défaut pour que GSAP le contrôle */
-            overflow-x: hidden;
-            overflow-y: hidden;
-        }
-
-        /* Conteneur principal pour le défilement fluide */
-        #main-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Contenu à faire défiler avec l'effet fluide */
-        #content {
-            width: 100%;
-            will-change: transform;
-        }
-
-        /* Navigation */
-        .nav {
-            position: fixed;
-            left: 0;
-            right: 0;
-            top: 0;
-            z-index: 50;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.75rem 1.5rem;
-            color: white;
-            mix-blend-mode: difference;
-        }
-        .logo {
-            font-size: 1.875rem;
-            font-weight: bold;
-        }
-        .nav-button {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            font-size: 0.75rem;
-            color: #a1a1aa;
-            background: none;
-            border: none;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        .nav-button:hover {
-            color: white;
-        }
-
-        /* Hero Section */
-        .hero-section {
-            position: relative;
-            width: 100%;
-            height: calc(1500px + 100vh);
-        }
-        .center-image {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            width: 100%;
-            background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: 170%;
-            clip-path: polygon(25% 25%, 75% 25%, 75% 75%, 25% 75%);
-        }
-        .gradient-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 24rem;
-            background: linear-gradient(to bottom, rgba(9, 9, 11, 0), #09090b);
-        }
-
-        /* Travel Sections */
-        .travel-section {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .travel-content {
-            display: flex;
-            width: 100%;
-            align-items: center;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: auto;
-        }
-        .travel-image {
-            flex: 1;
-            height: 80vh;
-            overflow: hidden;
-            border-radius: 20px;
-            margin-right: 4rem;
-        }
-        .travel-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform: scale(1.1);
-            transition: transform 0.5s ease;
-            border-radius: 20px;
-        }
-        .travel-info {
-            flex: 1;
-            color: #fff;
-        }
-        .travel-title {
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 900;
-            margin-bottom: 2rem;
-            opacity: 0;
-            transform: translateY(50px);
-        }
-        .travel-button {
-            background: transparent;
-            border: 2px solid #fff;
-            color: #fff;
-            padding: 1rem 2rem;
-            font-size: 1.2rem;
-            cursor: pointer;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateY(50px);
-        }
-        .travel-button:hover {
-            background: #fff;
-            color: #000;
-        }
-
-        /* Side Navigation */
-        .side-nav {
-            position: fixed;
-            left: 2rem;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 100;
-        }
-        .side-nav-dot {
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            margin: 1rem 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        .side-nav-dot::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
-            width: 2px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.2);
-            margin-left: 6px;
-        }
-        .side-nav-dot.active {
-            background: #ff6b6b;
-            transform: scale(1.5);
-        }
         
-        /* Section Backgrounds */
-        .travel-section:nth-child(1) { background: #111; }
-        .travel-section:nth-child(2) { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .travel-section:nth-child(3) { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-        .travel-section:nth-child(4) { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-        .travel-section:nth-child(5) { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
-        .travel-section:nth-child(6) { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        body {
+            margin: 0;
+            background-color: #1a1721;
+            overscroll-behavior: none;
+            padding: 0;
+            overflow-x: hidden;
+        }
 
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .travel-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            .travel-image {
-                margin-right: 0;
-                margin-bottom: 2rem;
-                height: 50vh;
-            }
-            .side-nav {
-                left: 1rem;
-            }
+        #content{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .images {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        img {
+            width: 40%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        img:nth-child(odd) {
+            margin-left: -200px;
+        }
+
+        img:nth-child(even) {
+            margin-right: -200px;
         }
     </style>
 </head>
 <body>
-    <nav class="nav">
-        <div class="logo">LANDSCAPE</div>
-        <button class="nav-button">
-            EXPLORE →
-        </button>
-    </nav>
-
-    <div id="main-container">
-        <!-- Conteneur pour le défilement fluide -->
-        <div id="content">
-            <section class="hero-section">
-                <div class="center-image" id="centerImage"></div>
-                <div class="gradient-overlay"></div>
+    <div id="wrapper">
+        <section id="content">
+            <section class="images">
+                <img data-speed="0.7" src="https://i.pinimg.com/1200x/9c/ea/17/9cea17fac34f1ea77171da9a29d730ff.jpg" alt="Artistic image 1">
+                <img data-speed="0.9" src="https://i.pinimg.com/1200x/d3/d1/c5/d3d1c51ebfeee8833862d5cd4ba64ea6.jpg" alt="Artistic image 2">
+                <img data-speed="1.1" src="https://i.pinimg.com/1200x/70/c7/f7/70c7f7e0bab8801187abb27efc99b0b7.jpg" alt="Artistic image 3">
+                <img data-speed="0.8" src="https://i.pinimg.com/1200x/60/cc/87/60cc8744fb901d18eadd51dffba37043.jpg" alt="Artistic image 4">
+                <img data-speed="1.2" src="https://i.pinimg.com/1200x/a6/f5/e3/a6f5e31d358ecad617ec1134f8f2b844.jpg" alt="Artistic image 5">
+                <img data-speed="0.6" src="https://i.pinimg.com/736x/e7/bd/2d/e7bd2df2a890c50a56bb6fb02c41d928.jpg" alt="Artistic image 6">
+                <img data-speed="1.0" src="https://i.pinimg.com/1200x/2a/34/39/2a3439f4dbeca56e3e5676b142e17233.jpg" alt="Artistic image 7">
+                <img data-speed="0.85" src="https://i.pinimg.com/736x/b8/8a/1a/b88a1afe85286f19fce6147127aaabb0.jpg" alt="Artistic image 8">
+                <img data-speed="1.15" src="https://i.pinimg.com/1200x/6a/9e/23/6a9e232cc0cc845e620f9c981aad5d84.jpg" alt="Artistic image 9">
+                <img data-speed="0.75" src="https://i.pinimg.com/1200x/9a/fb/d8/9afbd88179776c2279a4a6f8ebf5e6e9.jpg" alt="Artistic image 10">
+                <img data-speed="1.05" src="https://i.pinimg.com/1200x/8f/14/9a/8f149a2257dfda719aac4b59d5e28952.jpg" alt="Artistic image 11">
+                <img data-speed="0.95" src="https://i.pinimg.com/1200x/1b/d9/4f/1bd94ffa9f880c1b89f454c49c89e908.jpg" alt="Artistic image 12">
+                <img data-speed="1.25" src="https://i.pinimg.com/736x/9a/cf/aa/9acfaa1d742a7d1915684db0d7970a11.jpg" alt="Artistic image 13">
+                <img data-speed="0.65" src="https://i.pinimg.com/736x/57/a7/26/57a726602da4ad3bb4bcb37ea29bce16.jpg" alt="Artistic image 14">
             </section>
-
-            <div class="side-nav">
-                <div class="side-nav-dot active" data-section="0"></div>
-                <div class="side-nav-dot" data-section="1"></div>
-                <div class="side-nav-dot" data-section="2"></div>
-                <div class="side-nav-dot" data-section="3"></div>
-                <div class="side-nav-dot" data-section="4"></div>
-                <div class="side-nav-dot" data-section="5"></div>
-            </div>
-
-            <section id="section1" class="travel-section">
-                <div class="travel-content">
-                    <div class="travel-image">
-                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Alpes Suisses">
-                    </div>
-                    <div class="travel-info">
-                        <h2 class="travel-title">ALPES SUISSES</h2>
-                        <button class="travel-button">Voir la galerie</button>
-                    </div>
-                </div>
-            </section>
-            <section id="section2" class="travel-section">
-                <div class="travel-content">
-                    <div class="travel-image">
-                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Maldives">
-                    </div>
-                    <div class="travel-info">
-                        <h2 class="travel-title">MALDIVES</h2>
-                        <button class="travel-button">Voir la galerie</button>
-                    </div>
-                </div>
-            </section>
-            <section id="section3" class="travel-section">
-                <div class="travel-content">
-                    <div class="travel-image">
-                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Forêt Amazonienne">
-                    </div>
-                    <div class="travel-info">
-                        <h2 class="travel-title">AMAZONIE</h2>
-                        <button class="travel-button">Voir la galerie</button>
-                    </div>
-                </div>
-            </section>
-            <section id="section4" class="travel-section">
-                <div class="travel-content">
-                    <div class="travel-image">
-                        <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Lac Baïkal">
-                    </div>
-                    <div class="travel-info">
-                        <h2 class="travel-title">LAC BAÏKAL</h2>
-                        <button class="travel-button">Voir la galerie</button>
-                    </div>
-                </div>
-            </section>
-            <section id="section5" class="travel-section">
-                <div class="travel-content">
-                    <div class="travel-image">
-                        <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Océan Pacifique">
-                    </div>
-                    <div class="travel-info">
-                        <h2 class="travel-title">PACIFIQUE</h2>
-                        <button class="travel-button">Voir la galerie</button>
-                    </div>
-                </div>
-            </section>
-        </div>
+        </section>
     </div>
-    
+
+    <!-- GSAP CDNs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollSmoother.min.js"></script>
+
     <script>
-        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+        let skewSetter = gsap.quickTo("img", "skewY"),
+            clamp = gsap.utils.clamp(-8, 8); 
 
-        // Constantes
-        const SECTION_HEIGHT = 1500;
-
-        // Fonction pour gérer l'effet d'inclinaison (skew)
-        const content = document.getElementById("content");
-        let currentScroll = 0;
-        let skew = 0;
-
-        const skewSetter = gsap.quickSetter(content, "skewY", "deg");
-        const clamp = gsap.utils.clamp(-15, 15); // Limiter l'inclinaison pour éviter les déformations excessives
-
-        // Créer un proxy de défilement pour GSAP
-        // C'est l'élément qui gère le "défilement" réel, mais il est invisible
-        const scrollProxy = document.createElement("div");
-        scrollProxy.style.position = "absolute";
-        scrollProxy.style.width = "1px";
-        scrollProxy.style.height = `${content.scrollHeight}px`;
-        scrollProxy.style.top = "0";
-        scrollProxy.style.left = "0";
-        document.body.appendChild(scrollProxy);
-
-        // Animer le contenu de manière fluide en fonction du défilement du proxy
-        gsap.to(content, {
-            y: () => -scrollProxy.scrollTop,
-            ease: "power3.out",
-            overwrite: "auto",
-            onUpdate: () => {
-                // Mettre à jour l'effet d'inclinaison en fonction de la vitesse de défilement
-                const velocity = ScrollTrigger.getVelocity();
-                skew = clamp(velocity / -50);
-                skewSetter(skew);
-            }
+        ScrollSmoother.create({
+            wrapper: "#wrapper",
+            content: "#content",
+            smooth: 2,
+            speed: 3,
+            effects: true,
+            onUpdate: self => skewSetter(clamp(self.getVelocity() / -50)),
         });
-
-        // Fonction pour gérer le défilement de la section Hero
-        function handleHeroScroll() {
-            const scrollY = scrollProxy.scrollTop;
-            const centerImage = document.getElementById('centerImage');
-            
-            if (centerImage) {
-                const clip1 = gsap.utils.mapRange(0, SECTION_HEIGHT, 25, 0)(scrollY);
-                const clip2 = gsap.utils.mapRange(0, SECTION_HEIGHT, 75, 100)(scrollY);
-                const clipPath = `polygon(${gsap.utils.clamp(0, 100, clip1)}% ${gsap.utils.clamp(0, 100, clip1)}%, ${gsap.utils.clamp(0, 100, clip2)}% ${gsap.utils.clamp(0, 100, clip1)}%, ${gsap.utils.clamp(0, 100, clip2)}% ${gsap.utils.clamp(0, 100, clip2)}%, ${gsap.utils.clamp(0, 100, clip1)}% ${gsap.utils.clamp(0, 100, clip2)}%)`;
-                
-                const backgroundSize = `${gsap.utils.mapRange(0, SECTION_HEIGHT + 500, 170, 100)(scrollY)}%`;
-                const opacity = gsap.utils.clamp(0, 1, gsap.utils.mapRange(SECTION_HEIGHT, SECTION_HEIGHT + 500, 1, 0)(scrollY));
-                
-                centerImage.style.clipPath = clipPath;
-                centerImage.style.backgroundSize = backgroundSize;
-                centerImage.style.opacity = opacity;
-            }
-        }
-        
-        // Mettre à jour les animations de chaque section avec le défilement du proxy
-        const travelSections = document.querySelectorAll('.travel-section');
-        travelSections.forEach((section, index) => {
-            const image = section.querySelector('.travel-image img');
-            const title = section.querySelector('.travel-title');
-            const button = section.querySelector('.travel-button');
-
-            gsap.timeline({
-                scrollTrigger: {
-                    trigger: section,
-                    container: scrollProxy, // IMPORTANT : le container est maintenant le proxy
-                    start: "top 70%",
-                    toggleActions: "play none none reverse",
-                }
-            })
-            .fromTo(image, {
-                scale: 1.3,
-                clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)'
-            }, {
-                scale: 1,
-                clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
-                duration: 1.5,
-                ease: "power3.out"
-            }, 0)
-            .to(title, {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: "power3.out"
-            }, 0.3)
-            .to(button, {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: "power3.out"
-            }, 0.6);
-
-            gsap.to(image, {
-                y: "-20%",
-                ease: "none",
-                scrollTrigger: {
-                    trigger: section,
-                    container: scrollProxy, // IMPORTANT : le container est maintenant le proxy
-                    start: "top bottom",
-                    end: "bottom top",
-                    scrub: true
-                }
-            });
-        });
-
-        // Mettre à jour les points de navigation latérale
-        ScrollTrigger.create({
-            trigger: "#content",
-            start: "top top",
-            end: "bottom bottom",
-            container: scrollProxy,
-            onUpdate: self => {
-                const scrollY = self.scroll();
-                let activeIndex = -1;
-                
-                const heroSectionEnd = document.querySelector('.hero-section').offsetHeight;
-
-                if (scrollY >= heroSectionEnd) {
-                    for (let i = 0; i < travelSections.length; i++) {
-                        const sectionTop = travelSections[i].offsetTop;
-                        const sectionHeight = travelSections[i].offsetHeight;
-                        if (scrollY >= sectionTop - window.innerHeight / 2 && scrollY < sectionTop + sectionHeight - window.innerHeight / 2) {
-                            activeIndex = i;
-                            break;
-                        }
-                    }
-                } else {
-                    activeIndex = -1;
-                }
-
-                updateSideNav(activeIndex + 1);
-            }
-        });
-
-        function updateSideNav(activeIndex) {
-            document.querySelectorAll('.side-nav-dot').forEach((dot, index) => {
-                dot.classList.toggle('active', index === activeIndex);
-            });
-        }
-        
-        // Fonction de défilement fluide vers une section
-        function scrollToSection(index) {
-            const sections = document.querySelectorAll('.travel-section');
-            if (index === 0) {
-                gsap.to(scrollProxy, { duration: 1, scrollTo: 0, ease: "power2.out" });
-            } else if (sections[index - 1]) {
-                gsap.to(scrollProxy, { duration: 1, scrollTo: sections[index - 1], ease: "power2.out" });
-            }
-        }
-        
-        // Clic sur les points de navigation
-        document.querySelectorAll('.side-nav-dot').forEach(dot => {
-            dot.addEventListener('click', (e) => {
-                const sectionIndex = parseInt(e.currentTarget.getAttribute('data-section'));
-                scrollToSection(sectionIndex);
-            });
-        });
-
-        // Clic sur le bouton de navigation principal
-        document.querySelector('.nav-button').addEventListener('click', () => {
-            scrollToSection(1);
-        });
-
-        // Animation au survol des boutons
-        document.querySelectorAll('.travel-button').forEach(button => {
-            button.addEventListener('mouseenter', () => {
-                gsap.to(button, { scale: 1.05, duration: 0.3 });
-            });
-            button.addEventListener('mouseleave', () => {
-                gsap.to(button, { scale: 1, duration: 0.3 });
-            });
-        });
-
-        // Mettre à jour l'affichage de la section Hero en fonction du défilement du proxy
-        // (Il faut écouter l'événement sur le proxy maintenant)
-        scrollProxy.addEventListener('scroll', handleHeroScroll);
     </script>
 </body>
 </html>

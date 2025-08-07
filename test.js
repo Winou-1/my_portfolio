@@ -210,8 +210,8 @@ window.addEventListener('pageshow', (event) => {
 });
 
 document.addEventListener('click', (e) => {
-    // Check if the clicked element is an internal link.
     const link = e.target.closest('a');
+    const button = e.target.closest('.travel-button');
     if (link && link.href) {
         // Check if it's an internal link and not a hash link
         if (link.hostname === window.location.hostname && !link.hash) {
@@ -235,5 +235,21 @@ document.addEventListener('click', (e) => {
             }
         }
         // For external links, do nothing and let the browser navigate normally
+    }
+    if (button) {
+        // Prevent default button action
+        e.preventDefault();
+        
+        // Get the destination URL for the gallery
+        const destinationUrl = '/gallery/template/template.html';
+
+        // Start the fade-out animation
+        pageTransition.classList.add('is-active');
+        body.classList.add('is-transitioning');
+
+        // Navigate to the new page after the transition
+        setTimeout(() => {
+            window.location.href = destinationUrl;
+        }, 500);
     }
 });

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Effet de Zoom et Texte qui défile</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .text-stroke {
+            -webkit-text-stroke: 1px white;
+            color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-zinc-900">
+
+    <div id="pin-container" class="relative h-[250vh]">
+        <div id="zoom-effect-wrapper" class="h-screen w-full relative overflow-hidden">
+            <div id="background-image" class="absolute inset-0 z-0">
+                <img src="../img/template/rond/rond_test_1.png" alt="Background" class="w-full h-full object-cover">
+            </div>
+            <div class="relative z-10 h-screen flex flex-col items-center justify-center text-center">
+                <h1 id="main-text" class="text-7xl md:text-8xl lg:text-9xl font-bold uppercase tracking-wide leading-none text-stroke">
+                    Montagne
+                </h1>
+                <p class="text-white text-xl md:text-2xl mt-4">
+                    A Journey Through the Lands
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-zinc-900 text-white p-20 min-h-screen">
+        <h2 class="text-4xl font-bold">Le reste de la page...</h2>
+        <p class="mt-4 max-w-2xl mx-auto">
+            Ce contenu devient visible une fois que l'effet de zoom est terminé et que le défilement normal de la page a repris.
+        </p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const pinContainer = document.getElementById('pin-container');
+            const image = document.getElementById('background-image');
+            const mainText = document.getElementById('main-text');
+
+            // --- Animation de l'image (l'effet de zoom) ---
+            gsap.to(image, {
+                scale: 3,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: pinContainer,
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: true,
+                    // C'est cette ligne qui "bloque" la section à l'écran
+                    pin: true,
+                },
+            });
+            gsap.to(mainText, {
+                y: -2200,
+                opacity: 0,
+                ease: 'none',
+                scrollTrigger: {
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    scrub: true,
+                },
+            });
+        });
+    </script>
+</body>
+</html>

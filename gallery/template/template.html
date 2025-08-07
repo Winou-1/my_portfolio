@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Effet de Zoom et Texte qui défile</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="template.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-zinc-900">
+    <div id="overlay" class="fixed inset-0 bg-black z-[9999]"></div>
+
+    <div id="wrapper">
+        <div id="content">
+            <div id="pin-container" class="relative h-[250vh]">
+                <div id="zoom-effect-wrapper" class="h-screen w-full relative overflow-hidden">
+                    <div id="background-image" class="absolute inset-0 z-0">
+                        <img src="../../img/template/rond/rond_test_1.png" alt="Background" class="w-full h-full object-cover image-centered">
+                    </div>
+                    <div class="relative z-10 h-screen flex flex-col items-center justify-center text-center">
+                        <h1 id="main-text" class="text-7xl md:text-8xl lg:text-9xl font-bold uppercase tracking-wide leading-none text-stroke">
+                            Montagne
+                        </h1>
+                        <p class="text-white text-xl md:text-2xl mt-4">
+                            A Journey Through the Lands
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-zinc-900 text-white p-20 min-h-screen">
+                <h2 class="text-4xl font-bold">Le reste de la page...</h2>
+                <p class="mt-4 max-w-2xl mx-auto">
+                    Ce contenu devient visible une fois que l'effet de zoom est terminé et que le défilement normal de la page a repris.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollSmoother.min.js"></script>
+    <script src="template.js"></script>
+</body>
+</html>
