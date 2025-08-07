@@ -1,6 +1,4 @@
-// Empêcher le clic droit et le glisser-déposer
-document.body.addEventListener('contextmenu', e => e.preventDefault());
-document.body.addEventListener('dragstart', e => e.preventDefault());
+// Remove global event listeners for contextmenu and dragstart, they will be added after loading
 /*--------------------
 Vars
 --------------------*/
@@ -89,16 +87,6 @@ function loadAndDrawAllGalleryImages() {
     });
 }
 
-// Appeler cette fonction au chargement de la page
-window.addEventListener('load', loadAndDrawAllGalleryImages);
-window.addEventListener('resize', () => {
-    loadAndDrawAllGalleryImages(); 
-    if (galleryModal.style.display === 'flex') {
-        const imageSrc = galleryImageWrappers[currentImageIndex].dataset.src;
-        drawImageOnCanvas(modalCanvas, imageSrc);
-    }
-});
-
 // Fonction pour ouvrir la modale avec l'image sélectionnée
 function openModal(imageSrc) {
     galleryModal.style.display = 'flex';
@@ -161,77 +149,11 @@ function showNextImage() {
 
 
 /*--------------------
-Event Listeners
---------------------*/
-// Attachez l'écouteur de clic aux wrappers d'images
-galleryImageWrappers.forEach((wrapper, index) => {
-    wrapper.addEventListener('click', () => {
-        currentImageIndex = index;
-        const imageSrc = wrapper.dataset.src; 
-        openModal(imageSrc);
-    });
-});
-
-// Ajout de e.stopPropagation() pour empêcher la propagation du clic
-closeButton.addEventListener('click', (e) => {
-    e.stopPropagation(); 
-    closeModal();
-});
-prevArrow.addEventListener('click', (e) => {
-    e.stopPropagation();
-    showPrevImage();
-});
-nextArrow.addEventListener('click', (e) => {
-    e.stopPropagation();
-    showNextImage();
-});
-
-galleryModal.addEventListener('click', (e) => {
-    // Ferme la modale si le clic est sur l'arrière-plan de la modale
-    if (e.target === galleryModal) {
-        closeModal();
-    }
-});
-
-document.addEventListener('keydown', (e) => {
-    if (galleryModal.style.display === 'flex') {
-        if (e.key === 'ArrowLeft') {
-            showPrevImage();
-        } else if (e.key === 'ArrowRight') {
-            showNextImage();
-        } else if (e.key === 'Escape') {
-            closeModal();
-        }
-    }
-});
-
-
-
-/*--------------------
 Ajout des écouteurs et du swipe pour la gallerie
 --------------------*/
 let gallerySwipeStartX = 0;
 let gallerySwipeEndX = 0;
 const swipeThreshold = 30; 
-
-galleryModal.addEventListener('touchstart', (e) => {
-    gallerySwipeStartX = e.touches[0].clientX;
-}, { passive: true });
-galleryModal.addEventListener('touchend', (e) => {
-    gallerySwipeEndX = e.changedTouches[0].clientX;
-    const diffX = gallerySwipeStartX - gallerySwipeEndX;
-    if (Math.abs(diffX) > swipeThreshold) {
-        e.preventDefault(); 
-        if (diffX > 0) {
-            // Swipe vers la gauche
-            showNextImage();
-        } else {
-            // Swipe vers la droite
-            showPrevImage();
-        }
-    }
-}, { passive: false });
-
 
 /*--------------------
 Carrousel principal
@@ -259,88 +181,184 @@ const animate = () => {
     }
   }
 }
-animate()
 
-$items.forEach((item, i) => {
-  item.addEventListener('click', () => {
-    if (i === active) {
-      const targetPages = [
-        "page1.html", 
-        "page2.html", 
-        "page3.html", 
-        "page4.html", 
-        "page5.html", 
-        "page6.html", 
-        "page7.html", 
-        "page8.html", 
-        "page9.html", 
-        "page10.html"
-      ];
+// All event listeners and page initialization will be in this function
+function initPage() {
+    // Empêcher le clic droit et le glisser-déposer
+    document.body.addEventListener('contextmenu', e => e.preventDefault());
+    document.body.addEventListener('dragstart', e => e.preventDefault());
 
-      if (targetPages[i]) {
-        window.location.href = targetPages[i];
-      }
-    } else {
-      progress = (i / ($items.length - 1)) * 100;
-      animate();
-    }
-  })
-})
-
-const handleWheel = e => {
-  const wheelProgress = e.deltaY * speedWheel
-  progress = progress + wheelProgress
-  animate()
-}
-
-const handleMouseMove = (e) => {
-  if (e.type === 'mousemove') {
-    $cursors.forEach(($cursor) => {
-      $cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`
-    })
-  }
-  if (!isDown) return
-  const x = e.clientX || (e.touches && e.touches[0].clientX) || 0
-  const mouseProgress = (x - startX) * speedDrag
-  progress = progress + mouseProgress
-  startX = x
-  animate()
-}
-
-const handleMouseDown = e => {
-  isDown = true
-  startX = e.clientX || (e.touches && e.touches[0].clientX) || 0
-}
-
-const handleMouseUp = () => {
-  isDown = false
-}
-
-document.addEventListener('mousewheel', handleWheel)
-document.addEventListener('mousedown', handleMouseDown)
-document.addEventListener('mousemove', handleMouseMove)
-document.addEventListener('mouseup', handleMouseUp)
-document.addEventListener('touchstart', handleMouseDown)
-document.addEventListener('touchmove', handleMouseMove)
-document.addEventListener('touchend', handleMouseUp)
-
-const navbarToggle = document.querySelector('.navbar-toggle');
-const navbarMenu = document.querySelector('.navbar-menu');
-
-navbarToggle.addEventListener('click', () => {
-    navbarToggle.classList.toggle('active');
-    navbarMenu.classList.toggle('active');
-    body.classList.toggle('menu-active');
-});
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible')}
-    else {
-      entry.target.classList.remove('visible')}
-    })}, {})
-    const todoelements = document.querySelectorAll('.image-wrapper');
-    todoelements.forEach((element) => {
-      observer.observe(element);
+    // Initial animation for carousel
+    animate();
+    
+    /*--------------------
+    Event Listeners for gallery
+    --------------------*/
+    galleryImageWrappers.forEach((wrapper, index) => {
+        wrapper.addEventListener('click', () => {
+            currentImageIndex = index;
+            const imageSrc = wrapper.dataset.src; 
+            openModal(imageSrc);
+        });
     });
+
+    closeButton.addEventListener('click', (e) => {
+        e.stopPropagation(); 
+        closeModal();
+    });
+    prevArrow.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showPrevImage();
+    });
+    nextArrow.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showNextImage();
+    });
+
+    galleryModal.addEventListener('click', (e) => {
+        if (e.target === galleryModal) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (galleryModal.style.display === 'flex') {
+            if (e.key === 'ArrowLeft') {
+                showPrevImage();
+            } else if (e.key === 'ArrowRight') {
+                showNextImage();
+            } else if (e.key === 'Escape') {
+                closeModal();
+            }
+        }
+    });
+
+
+    galleryModal.addEventListener('touchstart', (e) => {
+        gallerySwipeStartX = e.touches[0].clientX;
+    }, { passive: true });
+    galleryModal.addEventListener('touchend', (e) => {
+        gallerySwipeEndX = e.changedTouches[0].clientX;
+        const diffX = gallerySwipeStartX - gallerySwipeEndX;
+        if (Math.abs(diffX) > swipeThreshold) {
+            e.preventDefault(); 
+            if (diffX > 0) {
+                showNextImage();
+            } else {
+                showPrevImage();
+            }
+        }
+    }, { passive: false });
+
+    // Clicks on carousel items
+    $items.forEach((item, i) => {
+      item.addEventListener('click', () => {
+        if (i === active) {
+          const targetPages = [
+            "page1.html", 
+            "page2.html", 
+            "page3.html", 
+            "page4.html", 
+            "page5.html", 
+            "page6.html", 
+            "page7.html", 
+            "page8.html", 
+            "page9.html", 
+            "page10.html"
+          ];
+
+          if (targetPages[i]) {
+            window.location.href = targetPages[i];
+          }
+        } else {
+          progress = (i / ($items.length - 1)) * 100;
+          animate();
+        }
+      })
+    })
+
+    const handleWheel = e => {
+      const wheelProgress = e.deltaY * speedWheel
+      progress = progress + wheelProgress
+      animate()
+    }
+
+    const handleMouseMove = (e) => {
+      if (e.type === 'mousemove') {
+        $cursors.forEach(($cursor) => {
+          $cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`
+        })
+      }
+      if (!isDown) return
+      const x = e.clientX || (e.touches && e.touches[0].clientX) || 0
+      const mouseProgress = (x - startX) * speedDrag
+      progress = progress + mouseProgress
+      startX = x
+      animate()
+    }
+
+    const handleMouseDown = e => {
+      isDown = true
+      startX = e.clientX || (e.touches && e.touches[0].clientX) || 0
+    }
+
+    const handleMouseUp = () => {
+      isDown = false
+    }
+
+    document.addEventListener('mousewheel', handleWheel)
+    document.addEventListener('mousedown', handleMouseDown)
+    document.addEventListener('mousemove', handleMouseMove)
+    document.addEventListener('mouseup', handleMouseUp)
+    document.addEventListener('touchstart', handleMouseDown)
+    document.addEventListener('touchmove', handleMouseMove)
+    document.addEventListener('touchend', handleMouseUp)
+
+    const navbarToggle = document.querySelector('.navbar-toggle');
+    const navbarMenu = document.querySelector('.navbar-menu');
+
+    navbarToggle.addEventListener('click', () => {
+        navbarToggle.classList.toggle('active');
+        navbarMenu.classList.toggle('active');
+        body.classList.toggle('menu-active');
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible')}
+        else {
+          entry.target.classList.remove('visible')}
+        })}, {})
+        const todoelements = document.querySelectorAll('.image-wrapper');
+        todoelements.forEach((element) => {
+          observer.observe(element);
+        });
+    
+    // Load and draw gallery images after page is visible
+    loadAndDrawAllGalleryImages();
+    window.addEventListener('resize', () => {
+        loadAndDrawAllGalleryImages(); 
+        if (galleryModal.style.display === 'flex') {
+            const imageSrc = galleryImageWrappers[currentImageIndex].dataset.src;
+            drawImageOnCanvas(modalCanvas, imageSrc);
+        }
+    });
+
+}
+
+// New loading screen logic
+document.addEventListener('DOMContentLoaded', () => {
+    const loaderContainer = document.getElementById('loader-container');
+    const mainContent = document.getElementById('main-content');
+
+    // Wait for the animation to finish (4.5s)
+    setTimeout(() => {
+        loaderContainer.style.opacity = '0';
+        setTimeout(() => {
+            loaderContainer.style.display = 'none';
+            mainContent.classList.add('visible');
+            initPage(); // Call the function to initialize the rest of the page
+        }, 1000); // Wait for the loader to fade out (1s)
+    }, 4500); // Total animation time (max animation duration + fill duration)
+});

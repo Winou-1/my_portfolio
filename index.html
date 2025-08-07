@@ -10,145 +10,157 @@
 </head>
 <body>
 
-
-	<nav class="navbar">
-		<div class="navbar-container">
-			<a href="#index.html" class ="navbar-logo">Pictures</a>
-			<button class="navbar-toggle">
-					<span class="bar"></span>
-					<span class="bar"></span>
-					<span class="bar"></span>
-				</button>
-				<ul class="navbar-menu">
-					<li><a href="#" class="active">Home</a></li>
-					<li><a href="#">Cars</a></li>
-					<li><a href="#">Landscape</a></li>
-					<li><a href="#">Shooting</a></li>
-					<li><a href="#">Contact</a></li>
-				</ul>
-			</div>
-		</nav>
-		
-
-
-<div class="header finisher-header">
-	<div class="main-carousel-title" id="mainCarouselTitle">
-        <h1>Découvrez mon Univers</h1>
+	<div id="loader-container">
+		<svg
+			id="logo"
+			width="497" height="102" viewBox="0 0 497 102" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M494.356 4.15601V18.7556H458.004V43.5798H490.516V58.1804H458.004V83.9001H494.356V98.4998H441.356V4.15601H494.356Z" stroke="white" stroke-width="5"/>
+			<path d="M394.781 4.284C401.795 4.284 407.878 5.48108 412.923 8.00372H412.922C417.98 10.4899 421.872 13.9149 424.457 18.3182C427.009 22.667 428.257 27.5931 428.257 33.0242C428.257 39.6827 426.303 45.6309 422.384 50.7733L422.385 50.7742C419.047 55.253 414.314 58.3597 408.367 60.1971L429.053 94.7147L431.322 98.4998H411.52L410.796 97.2586L390.272 62.0203H380.129V98.4998H363.481V4.284H394.781ZM380.129 47.6756H394.781C400.721 47.6756 404.715 46.2313 407.237 43.783C409.837 41.1741 411.225 37.6754 411.225 33.0242C411.225 28.2573 409.823 24.8976 407.297 22.577L407.272 22.5535C404.854 20.27 400.863 18.8836 394.781 18.8836H380.129V47.6756Z" stroke="white" stroke-width="5"/>
+			<path d="M293.498 4.284V63.2322C293.498 70.8033 295.33 75.9262 298.517 79.119C301.861 82.3846 306.585 84.1561 313.014 84.1561C319.357 84.1561 323.989 82.3855 327.246 79.1277L327.256 79.119L327.266 79.1092C330.531 75.9151 332.402 70.7968 332.402 63.2322V4.284H349.05V63.1043C349.05 70.8602 347.489 77.592 344.23 83.1795L344.22 83.1951C340.991 88.639 336.573 92.7404 330.997 95.4354L330.996 95.4344C325.582 98.0926 319.528 99.3963 312.886 99.3963C306.237 99.3963 300.141 98.0913 294.646 95.4354L294.639 95.4315L294.631 95.4276C289.141 92.7291 284.775 88.6282 281.552 83.1951L281.539 83.1746L281.527 83.1522C278.364 77.5703 276.85 70.8489 276.85 63.1043V4.284H293.498Z" stroke="white" stroke-width="5"/>
+			<path d="M267.768 4.284V18.7557H243.448V98.4998H226.8V18.7557H202.352V4.284H267.768Z" stroke="white" stroke-width="5"/>
+			<path d="M151.673 3.13199C161.82 3.13199 170.796 5.5862 178.503 10.5734C186.231 15.5737 191.845 22.6648 195.349 31.7394L196.662 35.1398H177.464L176.794 33.6857C174.509 28.7223 171.243 24.9746 166.998 22.3507L166.989 22.3449L166.981 22.34C162.842 19.7343 157.778 18.3722 151.673 18.3722C145.849 18.3722 140.702 19.7236 136.169 22.381C131.647 25.0317 128.084 28.8137 125.472 33.8L125.468 33.8078L125.464 33.8146C122.875 38.6791 121.533 44.49 121.533 51.3283C121.533 58.0676 122.87 63.8817 125.464 68.841L125.711 69.297C128.296 73.9758 131.778 77.5738 136.169 80.1476C140.702 82.8051 145.849 84.1564 151.673 84.1564C157.786 84.1564 162.857 82.8332 166.998 80.3058C171.243 77.682 174.509 73.9342 176.794 68.9709L177.464 67.5158H196.676L195.346 70.924C191.839 79.915 186.224 86.9591 178.503 91.9552L178.494 91.9601L178.485 91.966C170.78 96.8611 161.811 99.2677 151.673 99.2677C142.992 99.2677 135.013 97.2492 127.791 93.1867L127.776 93.1779L127.759 93.1681C120.628 89.0161 114.982 83.2749 110.843 75.9865C106.684 68.6631 104.629 60.4227 104.629 51.3283C104.629 42.2337 106.684 33.9925 110.843 26.6691C114.979 19.2998 120.624 13.5138 127.759 9.35953L127.771 9.35269L128.45 8.9689C135.496 5.07057 143.253 3.132 151.673 3.13199Z" stroke="white" stroke-width="5"/>
+			<path d="M94.1295 4.284V98.4998H77.481V4.284H94.1295Z" stroke="white" stroke-width="5"/>
+			<path d="M34.6558 4.284C45.088 4.284 53.4311 6.80184 59.2603 12.2401L59.7993 12.7479C65.2825 18.0485 68.0044 24.8309 68.0044 32.8963C68.0044 40.7133 65.3648 47.3821 60.0816 52.7391L59.5611 53.2537C53.8762 58.7459 45.4031 61.2518 34.6558 61.2518H20.0044V98.4998H3.35599V4.284H34.6558Z M20.0044 46.6522H34.6558C40.85 46.6522 44.8896 45.2964 47.3023 43.0848C49.7343 40.8555 51.1001 37.5877 51.1001 32.8963C51.1001 27.8739 49.6752 24.5353 47.2212 22.3963C44.7015 20.2002 40.6628 18.8836 34.6558 18.8836H20.0044V46.6522Z" stroke="white" stroke-width="5" fill="white" fill-rule="evenodd"/>
+		</svg>
     </div>
-<div class="carousel">
-	<div class="carousel-item">
-		<div class="carousel-box">
-			<div class="title">675lt</div>
-			<div class="num">01</div>
-			<img src="img/voiture/compressed/675lt.jpg" alt="" />
-		</div>
-	</div>
 
-	<div class="carousel-item">
-		<div class="carousel-box">
-			<div class="title">720s</div>
-			<div class="num">02</div>
-			<img src="img/voiture/compressed/720s.jpg" />
-		</div>
-	</div>
+	<div id="main-content">
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="index.html" class ="navbar-logo">Pictures</a>
+                <button class="navbar-toggle">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </button>
+                    <ul class="navbar-menu">
+                        <li><a href="index.html" class="active">Home</a></li>
+                        <li><a href="#">Cars</a></li>
+                        <li><a href="test.html">Landscape</a></li>
+                        <li><a href="#">Shooting</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </nav>
+            
 
-	<div class="carousel-item">
-		<div class="carousel-box">
-			<div class="title">812gts</div>
-			<div class="num">03</div>
-			<img
-				src="img/voiture/compressed/812_GTS.jpg"
-			/>
-		</div>
-	</div>
+        <div class="header finisher-header">
+            <div class="main-carousel-title" id="mainCarouselTitle">
+                <h1>Découvrez mon Univers</h1>
+            </div>
+            <div class="carousel">
+                <div class="carousel-item">
+                    <div class="carousel-box">
+                        <div class="title">675lt</div>
+                        <div class="num">01</div>
+                        <img src="img/voiture/compressed/675lt.jpg" alt="" />
+                    </div>
+                </div>
 
-	<div class="carousel-item">
-		<div class="carousel-box">
-			<div class="title">amg gtr</div>
-			<div class="num">04</div>
-			<img src="img/voiture/compressed/amg_gtr_bleu.jpg" />
-		</div>
-	</div>
+                <div class="carousel-item">
+                    <div class="carousel-box">
+                        <div class="title">720s</div>
+                        <div class="num">02</div>
+                        <img src="img/voiture/compressed/720s.jpg" />
+                    </div>
+                </div>
 
-	<div class="carousel-item">
-		<div class="carousel-box">
-			<div class="title">Chiron</div>
-			<div class="num">05</div>
-			<img src="img/voiture/compressed/chironDSC01559.jpg" />
-		</div>
-	</div>
+                <div class="carousel-item">
+                    <div class="carousel-box">
+                        <div class="title">812gts</div>
+                        <div class="num">03</div>
+                        <img
+                            src="img/voiture/compressed/812_GTS.jpg"
+                        />
+                    </div>
+                </div>
 
-	<div class="carousel-item">
-		<div class="carousel-box">
-			<div class="title">Chiron</div>
-			<div class="num">06</div>
-			<img src="img/voiture/compressed/chiron.jpg" />
-		</div>
-	</div>
+                <div class="carousel-item">
+                    <div class="carousel-box">
+                        <div class="title">amg gtr</div>
+                        <div class="num">04</div>
+                        <img src="img/voiture/compressed/amg_gtr_bleu.jpg" />
+                    </div>
+                </div>
 
-	<div class="carousel-item">
-		<div class="carousel-box">
-			<div class="title">Countach</div>
-			<div class="num">07</div>
-			<img src="IMG/voiture/compressed/countach.jpg" />
-		</div>
-	</div>
+                <div class="carousel-item">
+                    <div class="carousel-box">
+                        <div class="title">Chiron</div>
+                        <div class="num">05</div>
+                        <img src="img/voiture/compressed/chironDSC01559.jpg" />
+                    </div>
+                </div>
 
-	<div class="carousel-item">
-		<div class="carousel-box">
-			<div class="title">Chiron</div>
-			<div class="num">08</div>
-			<img src="img/voiture/compressed/chironDSC01700.jpg" />
-		</div>
-	</div>
+                <div class="carousel-item">
+                    <div class="carousel-box">
+                        <div class="title">Chiron</div>
+                        <div class="num">06</div>
+                        <img src="img/voiture/compressed/chiron.jpg" />
+                    </div>
+                </div>
 
-	<div class="carousel-item">
-		<div class="carousel-box">
-			<div class="title">Chiron</div>
-			<div class="num">09</div>
-			<img src="img/voiture/compressed/chironDSC01850.jpg" />
-		</div>
-	</div>
-	<div class="carousel-item">
-		<div class="carousel-box">
-			<div class="title">Porsche</div>
-			<div class="num">10</div>
-			<img src="img/voiture/compressed/DSC01850.jpg" />
-		</div>
-	</div>
-</div>
+                <div class="carousel-item">
+                    <div class="carousel-box">
+                        <div class="title">Countach</div>
+                        <div class="num">07</div>
+                        <img src="IMG/voiture/compressed/countach.jpg" />
+                    </div>
+                </div>
 
-<div class="layout">
-	<div class="box">High-quality, full-shooting<br />visual content creation<br />for lifestyle branding.</div>
-</div>
+                <div class="carousel-item">
+                    <div class="carousel-box">
+                        <div class="title">Chiron</div>
+                        <div class="num">08</div>
+                        <img src="img/voiture/compressed/chironDSC01700.jpg" />
+                    </div>
+                </div>
 
-<div class="cursor cursor2"></div>
-    <div class ="container">
-        <div class ="image-container">
-            <div class ="image-wrapper" data-src="img/voiture/compressed/675lt.jpg"><canvas class="gallery-image-canvas"></canvas></div>
-            <div class ="image-wrapper" data-src="img/voiture/compressed/720s.jpg"><canvas class="gallery-image-canvas"></canvas></div>
-            <div class ="image-wrapper" data-src="img/voiture/compressed/812_GTS.jpg"><canvas class="gallery-image-canvas"></canvas></div>
-            <div class ="image-wrapper" data-src="img/voiture/compressed/812_superfast.jpg"><canvas class="gallery-image-canvas"></canvas></div>
-            <div class ="image-wrapper" data-src="img/voiture/compressed/amg_gtr_bleu.jpg"><canvas class="gallery-image-canvas"></canvas></div>
-            <div class ="image-wrapper" data-src="img/voiture/compressed/chiron.jpg"><canvas class="gallery-image-canvas"></canvas></div>
-            <div class ="image-wrapper" data-src="img/voiture/compressed/chiron.jpg"><canvas class="gallery-image-canvas"></canvas></div>
-            <div class ="image-wrapper" data-src="img/voiture/compressed/chironDSC01559.jpg"><canvas class="gallery-image-canvas"></canvas></div>
-            <div class ="image-wrapper" data-src="img/voiture/compressed/chironDSC01700.jpg"><canvas class="gallery-image-canvas"></canvas></div>
-            <div class ="image-wrapper" data-src="img/voiture/compressed/chironDSC01850.jpg"><canvas class="gallery-image-canvas"></canvas></div>
-            <div class ="image-wrapper" data-src="img/voiture/compressed/chironDSC01850.jpg"><canvas class="gallery-image-canvas"></canvas></div>
-            <div class ="image-wrapper" data-src="img/voiture/huracan_perf_2.jpg"><canvas class="gallery-image-canvas"></canvas></div>
-            <div class ="image-wrapper" data-src="img/voiture/IMG_20230701_223224_417 (1).jpg"><canvas class="gallery-image-canvas"></canvas></div>
-        </div>
-    </div>
-	</div>
+                <div class="carousel-item">
+                    <div class="carousel-box">
+                        <div class="title">Chiron</div>
+                        <div class="num">09</div>
+                        <img src="img/voiture/compressed/chironDSC01850.jpg" />
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-box">
+                        <div class="title">Porsche</div>
+                        <div class="num">10</div>
+                        <img src="img/voiture/compressed/DSC01850.jpg" />
+                    </div>
+                </div>
+            </div>
 
-    <!-- Modale de la galerie d'images -->
-    <div id="galleryModal" class="gallery-modal">
-        <span class="close-button">&times;</span>
-        <!-- Canvas pour l'image de la modale -->
-        <canvas id="modalCanvas" class="modal-content"></canvas>
-        <a class="prev-arrow">&#10094;</a>
-        <a class="next-arrow">&#10095;</a>
+            <div class="layout">
+                <div class="box">High-quality, full-shooting<br />visual content creation<br />for lifestyle branding.</div>
+            </div>
+
+            <div class="cursor cursor2"></div>
+                <div class ="container">
+                    <div class ="image-container">
+                        <div class ="image-wrapper" data-src="img/voiture/compressed/675lt.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+                        <div class ="image-wrapper" data-src="img/voiture/compressed/720s.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+                        <div class ="image-wrapper" data-src="img/voiture/compressed/812_GTS.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+                        <div class ="image-wrapper" data-src="img/voiture/compressed/812_superfast.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+                        <div class ="image-wrapper" data-src="img/voiture/compressed/amg_gtr_bleu.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+                        <div class ="image-wrapper" data-src="img/voiture/compressed/chiron.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+                        <div class ="image-wrapper" data-src="img/voiture/compressed/chiron.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+                        <div class ="image-wrapper" data-src="img/voiture/compressed/chironDSC01559.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+                        <div class ="image-wrapper" data-src="img/voiture/compressed/chironDSC01700.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+                        <div class ="image-wrapper" data-src="img/voiture/compressed/chironDSC01850.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+                        <div class ="image-wrapper" data-src="img/voiture/compressed/chironDSC01850.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+                        <div class ="image-wrapper" data-src="img/voiture/huracan_perf_2.jpg"><canvas class="gallery-image-canvas"></canvas></div>
+                        <div class ="image-wrapper" data-src="img/voiture/IMG_20230701_223224_417 (1).jpg"><canvas class="gallery-image-canvas"></canvas></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="galleryModal" class="gallery-modal">
+                <span class="close-button">&times;</span>
+                <canvas id="modalCanvas" class="modal-content"></canvas>
+                <a class="prev-arrow">&#10094;</a>
+                <a class="next-arrow">&#10095;</a>
+            </div>
     </div>
 </body>
 </html>
