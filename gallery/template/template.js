@@ -43,10 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
             scrub: true,
         },
     });
-});
 
-// CODE JAVASCRIPT POUR LES CARTES DÉPLAÇABLES
-document.addEventListener("DOMContentLoaded", () => {
+    // CODE JAVASCRIPT POUR LES CARTES DÉPLAÇABLES
     const container = document.querySelector(".drag-cards-container");
     const cards = document.querySelectorAll(".drag-card");
 
@@ -60,11 +58,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
             card.style.top = top;
             card.style.left = left;
-            card.style.transform = `rotate(${rotate})`;
+            card.style.transform = `rotate(${rotate}) scale(0.8)`; // Initial scale for animation
+            card.style.opacity = 0; // Initial opacity for animation
         });
     }
 
-    initializeCards();
+    // Fonction pour l'animation d'apparition des cartes au scroll
+    function animateOnScroll() {
+        cards.forEach((card) => {
+            gsap.to(card, {
+                opacity: 1,
+                scale: 1,
+                duration: 1,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                }
+            });
+        });
+    }
+    
+    // Initialiser les cartes après un court délai pour laisser GSAP s'enregistrer
+    setTimeout(() => {
+        initializeCards();
+        animateOnScroll();
+    }, 100);
 
     cards.forEach((card) => {
         let isDragging = false;
@@ -89,21 +109,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         document.addEventListener("mousemove", (e) => {
             if (!isDragging) return;
-
             const deltaX = e.clientX - startX;
             const deltaY = e.clientY - startY;
-
             let newLeft = initialLeft + deltaX;
             let newTop = initialTop + deltaY;
-
             const containerRect = container.getBoundingClientRect();
             const cardRect = card.getBoundingClientRect();
-
             newLeft = Math.max(0, newLeft);
             newLeft = Math.min(containerRect.width - cardRect.width, newLeft);
             newTop = Math.max(0, newTop);
             newTop = Math.min(containerRect.height - cardRect.height, newTop);
-
             card.style.left = `${newLeft}px`;
             card.style.top = `${newTop}px`;
         });
@@ -115,13 +130,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-
 // NOUVEAU CODE JAVASCRIPT POUR LA GALERIE AVEC MODALE
 const galleryModal = document.getElementById('galleryModal');
 const closeButton = document.querySelector('.close-button');
 const prevArrow = document.querySelector('.prev-arrow');
 const nextArrow = document.querySelector('.next-arrow');
-const galleryImageWrappers = document.querySelectorAll('.image-wrapper');
+
+// Nouveau sélecteur pour inclure l'image centrale
+const galleryImageWrappers = document.querySelectorAll('.image-wrapper, .image-centrale .image-wrapper');
+
 let currentImageIndex = -1;
 const body = document.body;
 const modalCanvas = document.getElementById('modalCanvas');
@@ -151,9 +168,9 @@ function drawImageOnCanvas(canvasElement, imageSrc) {
             height = targetHeight;
             width = height * aspectRatio;
         }
-        canvasElement.width = width;
-        canvasElement.height = height;
-        ctx.drawImage(img, 0, 0, width, height);
+        canvasElement.width = width * 5;
+        canvasElement.height = height * 5;
+        ctx.drawImage(img, 0, 0, width * 5, height * 5);
     };
     img.src = imageSrc;
 }
@@ -257,8 +274,15 @@ galleryModal.addEventListener('click', (e) => {
 
 // Animation d'apparition des images de la galerie en scrollant
 document.addEventListener('DOMContentLoaded', function() {
-    const imageWrappers = document.querySelectorAll('.image-wrapper');
-    imageWrappers.forEach((wrapper) => {
+    // Sélectionne toutes les images de la galerie
+    const allImageWrappers = document.querySelectorAll('.image-wrapper');
+    const centralImageWrapper = document.querySelector('.image-centrale'); // Correction ici
+
+    // Crée un tableau des images de la galerie sans l'image centrale pour l'animation
+    const galleryImageWrappers = Array.from(allImageWrappers).filter(wrapper => wrapper.closest('.image-centrale') === null);
+
+    // Animation d'apparition pour les images de la galerie
+    galleryImageWrappers.forEach((wrapper) => {
         gsap.to(wrapper, {
             opacity: 1,
             y: 0,
@@ -266,9 +290,46 @@ document.addEventListener('DOMContentLoaded', function() {
             ease: "power2.out",
             scrollTrigger: {
                 trigger: wrapper,
-                start: "top 80%", // Trigger when the top of the element hits 80% of the viewport
+                start: "top 80%", // Déclenche quand le haut de l'élément atteint 80% de la fenêtre d'affichage
                 toggleActions: "play none none none"
             }
         });
     });
+
+    // Nouvelle animation pour l'image centrale
+    if (centralImageWrapper) {
+        gsap.from(centralImageWrapper, {
+            opacity: 0,
+            scale: 0.8,
+            y: 50, // Commence 50px plus bas
+            duration: 1.5,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: centralImageWrapper,
+                start: "top 85%", // Déclenche un peu plus tôt que les autres
+                toggleActions: "play none none none"
+            }
+        });
+    }
 });
+
+const navbarToggle = document.querySelector('.navbar-toggle');
+    const navbarMenu = document.querySelector('.navbar-menu');
+
+    navbarToggle.addEventListener('click', () => {
+        navbarToggle.classList.toggle('active');
+        navbarMenu.classList.toggle('active');
+        body.classList.toggle('menu-active');
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible')}
+        else {
+          entry.target.classList.remove('visible')}
+        })}, {})
+        const todoelements = document.querySelectorAll('.image-wrapper');
+        todoelements.forEach((element) => {
+          observer.observe(element);
+        });
