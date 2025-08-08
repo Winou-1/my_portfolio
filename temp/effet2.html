@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cartes Déplaçables</title>
+    <style>
+        :root {
+            --neutral-950: #0a0a0a;
+            --neutral-800: #262626;
+            --neutral-200: #e5e5e5;
+            --indigo-500: #6366f1;
+        }
+
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            box-sizing: border-box;
+        }
+
+        .section-container {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            display: grid;
+            place-content: center;
+            overflow: hidden;
+            background-color: var(--neutral-950);
+        }
+
+        .title {
+            position: relative;
+            z-index: 0;
+            font-size: 20vw;
+            font-weight: 900;
+            color: var(--neutral-800);
+            margin: 0;
+            text-align: center;
+        }
+
+        .title .text-indigo-500 {
+            color: var(--indigo-500);
+        }
+
+        @media (min-width: 768px) {
+            .title {
+                font-size: 200px;
+            }
+        }
+
+        .drag-cards-container {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+        }
+
+        .drag-card {
+            position: absolute;
+            background-color: var(--neutral-200);
+            padding: 4px;
+            padding-bottom: 16px;
+            cursor: grab;
+            user-select: none;
+            touch-action: none;
+        }
+
+        .drag-card img {
+            width: 100%;
+            height: auto;
+            pointer-events: none;
+        }
+
+        .w-24 { width: 96px; }
+        .w-36 { width: 144px; }
+        .w-40 { width: 160px; }
+        .w-48 { width: 192px; }
+        .w-52 { width: 208px; }
+
+        @media (min-width: 768px) {
+            .md\:w-48 { width: 192px; }
+            .md\:w-56 { width: 224px; }
+            .md\:w-64 { width: 256px; }
+            .md\:w-72 { width: 288px; }
+            .md\:w-80 { width: 320px; }
+        }
+    </style>
+</head>
+<body>
+    <section class="section-container">
+      <h2 class="title">ASTRO<span class="text-indigo-500">.</span></h2>
+      <div class="drag-cards-container">
+        <div
+          class="drag-card w-36 md:w-56"
+          data-rotate="6deg"
+          data-top="20%"
+          data-left="25%"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1635373670332-43ea883bb081?q=80&w=2781&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Carte 1"
+          />
+        </div>
+        <div
+          class="drag-card w-24 md:w-48"
+          data-rotate="12deg"
+          data-top="45%"
+          data-left="60%"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1576174464184-fb78fe882bfd?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Carte 2"
+          />
+        </div>
+        <div
+          class="drag-card w-52 md:w-80"
+          data-rotate="-6deg"
+          data-top="20%"
+          data-left="40%"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1503751071777-d2918b21bbd9?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Carte 3"
+          />
+        </div>
+        <div
+          class="drag-card w-48 md:w-72"
+          data-rotate="8deg"
+          data-top="50%"
+          data-left="40%"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1620428268482-cf1851a36764?q=80&w=2609&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Carte 4"
+          />
+        </div>
+        <div
+          class="drag-card w-40 md:w-64"
+          data-rotate="18deg"
+          data-top="20%"
+          data-left="65%"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1602212096437-d0af1ce0553e?q=80&w=2671&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Carte 5"
+          />
+        </div>
+        <div
+          class="drag-card w-24 md:w-48"
+          data-rotate="-3deg"
+          data-top="35%"
+          data-left="55%"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1622313762347-3c09fe5f2719?q=80&w=2640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Carte 6"
+          />
+        </div>
+      </div>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const container = document.querySelector(".drag-cards-container");
+        const cards = document.querySelectorAll(".drag-card");
+
+        let maxZIndex = 1;
+
+        function initializeCards() {
+          cards.forEach((card) => {
+            const top = card.getAttribute("data-top");
+            const left = card.getAttribute("data-left");
+            const rotate = card.getAttribute("data-rotate");
+
+            card.style.top = top;
+            card.style.left = left;
+            card.style.transform = `rotate(${rotate})`;
+          });
+        }
+
+        initializeCards();
+
+        cards.forEach((card) => {
+          let isDragging = false;
+          let startX, startY;
+          let initialLeft, initialTop;
+
+          function bringToFront() {
+            maxZIndex++;
+            card.style.zIndex = maxZIndex;
+          }
+
+          card.addEventListener("mousedown", (e) => {
+            isDragging = true;
+            bringToFront();
+            card.style.cursor = "grabbing";
+
+            startX = e.clientX;
+            startY = e.clientY;
+            initialLeft = card.offsetLeft;
+            initialTop = card.offsetTop;
+          });
+
+          document.addEventListener("mousemove", (e) => {
+            if (!isDragging) return;
+
+            const deltaX = e.clientX - startX;
+            const deltaY = e.clientY - startY;
+
+            let newLeft = initialLeft + deltaX;
+            let newTop = initialTop + deltaY;
+
+            const containerRect = container.getBoundingClientRect();
+            const cardRect = card.getBoundingClientRect();
+
+            newLeft = Math.max(0, newLeft);
+            newLeft = Math.min(containerRect.width - cardRect.width, newLeft);
+            newTop = Math.max(0, newTop);
+            newTop = Math.min(containerRect.height - cardRect.height, newTop);
+
+            card.style.left = `${newLeft}px`;
+            card.style.top = `${newTop}px`;
+          });
+
+          document.addEventListener("mouseup", () => {
+            isDragging = false;
+            card.style.cursor = "grab";
+          });
+        });
+      });
+    </script>
+</body>
+</html>

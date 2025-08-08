@@ -1,19 +1,11 @@
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+gsap.registerPlugin(ScrollTrigger);
 
-// Initialisation du smooth scroll sur le wrapper
-let smoother = ScrollSmoother.create({
-    wrapper: "#wrapper",
-    content: "#content",
-    smooth: 2,
-    effects: true
-});
-
-// Animations de fondu (fade) au chargement et au départ de la page
+// Initialisation des animations de fondu (fade) au chargement et au départ de la page
 window.addEventListener('load', () => {
     // Fondu d'entrée
     gsap.to("#overlay", {
         opacity: 0,
-        duration: 1.5,
+        duration: 0.5,
         ease: "power2.inOut",
         onComplete: () => {
             document.getElementById('overlay').style.display = 'none';
@@ -21,7 +13,7 @@ window.addEventListener('load', () => {
     });
 });
 
-// Votre code pour l'effet de zoom
+// code pour l'effet de zoom
 document.addEventListener('DOMContentLoaded', () => {
     let pinContainer = document.getElementById('pin-container');
     let image = document.getElementById('background-image');
@@ -39,18 +31,90 @@ document.addEventListener('DOMContentLoaded', () => {
         },
     });
 
+    // Code mis à jour pour le texte principal
     gsap.to(mainText, {
-        y: -500,
+        y: -300,
         opacity: 0,
         ease: 'none',
         scrollTrigger: {
             trigger: pinContainer,
-            start: 'top top',
+            start: 'top top+=100', // Commence à faire disparaître le texte après 100px de défilement
             end: 'bottom bottom',
             scrub: true,
         },
     });
 });
+
+// CODE JAVASCRIPT POUR LES CARTES DÉPLAÇABLES
+document.addEventListener("DOMContentLoaded", () => {
+    const container = document.querySelector(".drag-cards-container");
+    const cards = document.querySelectorAll(".drag-card");
+
+    let maxZIndex = 1;
+
+    function initializeCards() {
+        cards.forEach((card) => {
+            const top = card.getAttribute("data-top");
+            const left = card.getAttribute("data-left");
+            const rotate = card.getAttribute("data-rotate");
+
+            card.style.top = top;
+            card.style.left = left;
+            card.style.transform = `rotate(${rotate})`;
+        });
+    }
+
+    initializeCards();
+
+    cards.forEach((card) => {
+        let isDragging = false;
+        let startX, startY;
+        let initialLeft, initialTop;
+
+        function bringToFront() {
+            maxZIndex++;
+            card.style.zIndex = maxZIndex;
+        }
+
+        card.addEventListener("mousedown", (e) => {
+            isDragging = true;
+            bringToFront();
+            card.style.cursor = "grabbing";
+
+            startX = e.clientX;
+            startY = e.clientY;
+            initialLeft = card.offsetLeft;
+            initialTop = card.offsetTop;
+        });
+
+        document.addEventListener("mousemove", (e) => {
+            if (!isDragging) return;
+
+            const deltaX = e.clientX - startX;
+            const deltaY = e.clientY - startY;
+
+            let newLeft = initialLeft + deltaX;
+            let newTop = initialTop + deltaY;
+
+            const containerRect = container.getBoundingClientRect();
+            const cardRect = card.getBoundingClientRect();
+
+            newLeft = Math.max(0, newLeft);
+            newLeft = Math.min(containerRect.width - cardRect.width, newLeft);
+            newTop = Math.max(0, newTop);
+            newTop = Math.min(containerRect.height - cardRect.height, newTop);
+
+            card.style.left = `${newLeft}px`;
+            card.style.top = `${newTop}px`;
+        });
+
+        document.addEventListener("mouseup", () => {
+            isDragging = false;
+            card.style.cursor = "grab";
+        });
+    });
+});
+
 
 // NOUVEAU CODE JAVASCRIPT POUR LA GALERIE AVEC MODALE
 const galleryModal = document.getElementById('galleryModal');
@@ -87,9 +151,9 @@ function drawImageOnCanvas(canvasElement, imageSrc) {
             height = targetHeight;
             width = height * aspectRatio;
         }
-canvasElement.width = width;
-canvasElement.height = height;
-ctx.drawImage(img, 0, 0, width, height);
+        canvasElement.width = width;
+        canvasElement.height = height;
+        ctx.drawImage(img, 0, 0, width, height);
     };
     img.src = imageSrc;
 }
@@ -189,4 +253,22 @@ galleryModal.addEventListener('click', (e) => {
     if (e.target === galleryModal) {
         closeModal();
     }
+});
+
+// Animation d'apparition des images de la galerie en scrollant
+document.addEventListener('DOMContentLoaded', function() {
+    const imageWrappers = document.querySelectorAll('.image-wrapper');
+    imageWrappers.forEach((wrapper) => {
+        gsap.to(wrapper, {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: wrapper,
+                start: "top 80%", // Trigger when the top of the element hits 80% of the viewport
+                toggleActions: "play none none none"
+            }
+        });
+    });
 });
