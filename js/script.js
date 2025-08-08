@@ -316,11 +316,22 @@ function initPage() {
 
     const navbarToggle = document.querySelector('.navbar-toggle');
     const navbarMenu = document.querySelector('.navbar-menu');
+    const navbarLinks = document.querySelectorAll('.navbar-menu a');
 
     navbarToggle.addEventListener('click', () => {
         navbarToggle.classList.toggle('active');
         navbarMenu.classList.toggle('active');
         body.classList.toggle('menu-active');
+    });
+
+    navbarLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (navbarMenu.classList.contains('active')) {
+                navbarToggle.classList.remove('active');
+                navbarMenu.classList.remove('active');
+                body.classList.remove('menu-active');
+            }
+        });
     });
 
     const observer = new IntersectionObserver((entries) => {
