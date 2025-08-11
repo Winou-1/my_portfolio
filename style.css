@@ -27,7 +27,7 @@
 body {
   font-family: "Jost", serif;
   color: white;
-  background: linear-gradient(45deg, #202020, #0d2229, #000000);
+  background: linear-gradient(45deg, #000000, #000000, #000000);
 }
 
 
@@ -266,6 +266,7 @@ body {
   column-count: 4;
   column-gap: 1rem;
   padding: 2rem;
+  background: linear-gradient(45deg, #150e35, #000000, #000000);
 }
 
 .image-wrapper.visible{
