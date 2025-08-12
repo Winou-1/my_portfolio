@@ -323,7 +323,7 @@ body {
 
 
 /* Responsive adjustments */
-@media (max-width: 768px) {j
+@media (max-width: 768px) {
     .travel-content {
         flex-direction: column;
         text-align: center;
