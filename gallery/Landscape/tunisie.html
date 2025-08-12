@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Effet de Zoom et Texte qui défile</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="tunisie.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="bg-zinc-900 overflow-x-hidden">
+    <div class="header finisher-header" style="width: 100%;">
+        <div id="overlay" class="fixed inset-0 bg-black z-[9999]"></div>
+                <nav class="navbar">
+            <div class="navbar-container">
+                <a href="../../index.html" class ="navbar-logo">Pictures</a>
+                <button class="navbar-toggle">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </button>
+                    <ul class="navbar-menu">
+                        <li><a href="../../index.html">Home</a></li>
+                        <li><a href="#">Cars</a></li>
+                        <li><a href="../../landscape.html"class="active">Landscape</a></li>
+                        <li><a href="#">Shooting</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </nav>
+        <div>
+            <div>
+                <div id="pin-container" class="relative h-[150vh]">
+                    <div id="zoom-effect-wrapper" class="h-screen w-full relative overflow-hidden flex items-center justify-center">
+                        <div id="background-image" class="absolute inset-0 z-0">
+                            <img src="../../img/template/rond/rond_test_1.png" alt="Background" class="w-full h-full object-contain image-centered">
+                        </div>
+                        <div class="relative z-10 h-screen flex flex-col items-center justify-center text-center">
+                            <h1 id="main-text" class="text-7xl md:text-8xl lg:text-9xl font-bold uppercase tracking-wide leading-none text-stroke">
+                                Montagne
+                            </h1>
+                            <p class="text-white text-xl md:text-2xl mt-4">
+                                A Journey Through the Lands
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            
+                <section id="drag-cards-section" class="relative min-h-screen w-full grid place-content-center overflow-hidden bg-neutral-950">
+                    <h2 class="drag-cards-title">Picture<span class="text-indigo-500">.</span></h2>
+                  <div class="drag-cards-container">
+                    <div class="drag-card w-36 md:w-56" data-rotate="6deg" data-top="20%" data-left="25%">
+                      <img src="https://images.unsplash.com/photo-1635373670332-43ea883bb081?q=80&w=2781&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Carte 1" />
+                    </div>
+                    <div class="drag-card w-24 md:w-48" data-rotate="12deg" data-top="45%" data-left="60%">
+                      <img src="https://images.unsplash.com/photo-1576174464184-fb78fe882bfd?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Carte 2" />
+                    </div>
+                    <div class="drag-card w-52 md:w-80" data-rotate="-6deg" data-top="20%" data-left="40%">
+                      <img src="https://images.unsplash.com/photo-1503751071777-d2918b21bbd9?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Carte 3" />
+                    </div>
+                    <div class="drag-card w-48 md:w-72" data-rotate="8deg" data-top="50%" data-left="40%">
+                      <img src="https://images.unsplash.com/photo-1620428268482-cf1851a36764?q=80&w=2609&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Carte 4" />
+                    </div>
+                    <div class="drag-card w-40 md:w-64" data-rotate="18deg" data-top="20%" data-left="65%">
+                      <img src="https://images.unsplash.com/photo-1602212096437-d0af1ce0553e?q=80&w=2671&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Carte 5" />
+                    </div>
+                    <div class="drag-card w-24 md:w-48" data-rotate="-3deg" data-top="35%" data-left="55%">
+                      <img src="https://images.unsplash.com/photo-1622313762347-3c09fe5f2719?q=80&w=2640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Carte 6" />
+                    </div>
+                  </div>
+                </section>
+                <div class = "image-centrale">
+                    <img src="../../img/voiture/675lt.jpg" alt="Artistic image 1">
+                </div>
+                <main>
+                  <h2 class="title">La Galerie</h2>
+                  <div class="image-container">
+                      <div class="image-wrapper" data-src="../../img/template/rond/rond_landscape_1.png">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1601042879364-f3947d3f9c16?q=80&w=2487&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?q=80&w=2272&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1514439827219-9137a0b99245?q=80&w=2487&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1525790935716-36a6c45ad067?q=80&w=2487&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1561344640-2453889cde5b?q=80&w=2467&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1561602009-0ecd1cada8bd?q=80&w=2456&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1560583306-bd304a162229?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1535478044878-3ed83d5456ef?q=80&w=2382&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1610322231968-31322d42851f?q=80&w=2536&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1561344640-2453889cde5b?q=80&w=2467&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1536890992765-f42a1ee1e2a8?q=80&w=2121&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1560583306-bd304a162229?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1573455494060-c5595004fb6c?q=80&w=2280&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1627740660376-bc7506720b8a?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1563964040780-8605906e3eb6?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1592507645647-f2f1d8103c86?q=80&w=2487&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1504805572947-34fad45aed93?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1541591681685-0246308f076b?q=80&w=2489&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1539027994943-7d6960acfaad?q=80&w=2535&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1573501815578-6252ee088c47?q=80&w=2283&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1558273246-57d22047406d?q=80&w=2535&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1534685042784-4c7c97ae40d7?q=80&w=2427&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="https://images.unsplash.com/photo-1627740660376-bc7506720b8a?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                  </div>
+                </main>
+
+                <div id="galleryModal" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-90 flex justify-center items-center z-[10000] hidden">
+                    <canvas id="modalCanvas" class="w-full h-full object-contain transition-all duration-300"></canvas>
+                    <button class="close-button absolute top-10 right-10 text-white text-4xl cursor-pointer p-2">
+                        &times;
+                    </button>
+                    <div class="prev-arrow absolute top-1/2 left-4 text-white text-5xl cursor-pointer p-4 select-none">
+                        &#10094;
+                    </div>
+                    <div class="next-arrow absolute top-1/2 right-4 text-white text-5xl cursor-pointer p-4 select-none">
+                        &#10095;
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+    <script src="tunisie.js"></script> 
+    <script src="../../js/finisher-header.es5.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+new FinisherHeader({
+  "count": 100,
+  "size": {
+    "min": 2,
+    "max": 8,
+    "pulse": 0
+  },
+  "speed": {
+    "x": {
+      "min": 0,
+      "max": 0.4
+    },
+    "y": {
+      "min": 0,
+      "max": 0.6
+    }
+  },
+  "colors": {
+    "background": "#000000",
+    "particles": [
+      "#fbfcca",
+      "#d7f3fe",
+      "#ffd0a7"
+    ]
+  },
+  "blending": "overlay",
+  "opacity": {
+    "center": 1,
+    "edge": 0
+  },
+  "skew": -2,
+  "shapes": [
+    "c"
+  ]
+});
+</script>
+</body>
+</html>

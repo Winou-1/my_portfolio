@@ -378,11 +378,11 @@ body {
     pointer-events: none;
 }
 
-.w-24 { width: 144px; }
-.w-36 { width: 192px; }
-.w-40 { width: 208px; }
-.w-48 { width: 240px; }
-.w-52 { width: 256px; }
+.w-24 { width: 144px*2; }
+.w-36 { width: 192px*2; }
+.w-40 { width: 208px*2; }
+.w-48 { width: 240px*2; }
+.w-52 { width: 256px*2; }
 
 @media (min-width: 768px) {
     .md\:w-48 { width: 240px; }

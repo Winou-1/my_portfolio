@@ -1,7 +1,7 @@
 gsap.registerPlugin(ScrollTrigger);
 
 // Initialisation des animations de fondu (fade) au chargement et au départ de la page
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
     // Fondu d'entrée
     gsap.to("#overlay", {
         opacity: 0,
