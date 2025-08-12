@@ -1,0 +1,409 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #09090b;
+    color: white;
+    overflow-x: hidden;
+}
+.text-stroke {
+    -webkit-text-stroke: 1px white;
+    color: transparent;
+}
+.image-centered {
+    object-position: center;
+    object-fit: contain;
+    justify-content: center;
+    width: 100%;
+}
+
+
+
+/* navbar */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    background: transparent;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    z-index: 999;
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 2rem;
+    max-width: 1600px;
+}
+
+.navbar-logo {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.navbar-container .navbar-menu {
+    display: flex;
+    text-align: center;
+    gap: 1.5rem;
+    list-style: none;
+}
+
+.navbar-container .navbar-menu li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 500;
+    padding: 3px 20px;
+    border-radius: 20px;
+    border: 2px solid transparent;
+    transition: all 0.7s ease;
+    white-space: nowrap;
+}
+
+.navbar-container .navbar-menu li a:hover,
+.navbar-container .navbar-menu li a.active {
+    color: #ffffff;
+    background: rgba(188, 212, 229, 0);
+    border: 2px solid #fff;
+}
+
+.navbar-toggle {
+    display: none;
+    background: transparent;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 880px) {
+    .navbar {
+        backdrop-filter: none;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.219);
+    }
+
+    .navbar-container .navbar-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.7rem !important;
+    position: fixed;
+    height: 100vh;
+    width: 250px;
+    top: 0;
+    right: -250px;
+    padding: 5rem 1.5rem;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 1);
+    backdrop-filter: blur(12px);
+    transition: all 0.5s ease-in-out;
+    z-index: 998;
+  }
+
+    .navbar-container .navbar-menu.active {
+    right: 0;
+  }
+
+    .navbar-toggle {
+        display: block;
+        z-index: 999;
+    }
+
+    .navbar-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .navbar-toggle.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .navbar-toggle.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-container {
+        padding: 0 1rem;
+    }
+
+    .navbar-logo {
+        font-size: 1.7rem;
+    }
+
+    .navbar-container .navbar-menu li a {
+        font-size: 1.2rem;
+        padding: 3px 15px;
+    }
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+}
+
+
+
+
+/* Navigation */
+.nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.5rem;
+    color: white;
+    mix-blend-mode: difference;
+}
+.logo {
+    font-size: 1.875rem;
+    font-weight: bold;
+}
+.nav-button {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    color: #a1a1aa;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.nav-button:hover {
+    color: white;
+}
+
+
+/* NOUVEAUX styles pour la galerie */
+.image-container {
+  column-count: 4;
+  column-gap: 1rem;
+  padding: 2rem;
+}
+
+.image-wrapper.visible{
+    opacity: 1;
+    scale : 1;
+}
+
+.image-wrapper {
+  break-inside: avoid;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  opacity: 0; /* Initial state for scroll animation */
+  transform: translateY(50px); /* Initial state for scroll animation */
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Animation properties */
+  position: relative;
+}
+
+/* Style pour les éléments canvas dans la galerie */
+.gallery-image-canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.4s ease;
+}
+
+/* Animation de survol sur le canvas lui-même */
+.gallery-image-canvas:hover {
+  transform: scale(1.07);
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  padding-top: 2rem;
+}
+
+/* Media queries pour la galerie */
+@media (max-width: 2000px) {
+  .image-container {
+    column-count: 3;
+  }
+}
+
+@media (max-width: 1024px) {
+  .image-container {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .image-container {
+    column-count: 1;
+  }
+}
+
+/* Styles pour la modale */
+#galleryModal {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.9);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+}
+
+#modalCanvas {
+    max-width: 70%;
+    max-height: 70%;
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+    transform: scale(0.9);
+    justify-content: center;
+}
+
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.prev-arrow, .next-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 50px;
+    color: #fff;
+    cursor: pointer;
+    user-select: none;
+}
+
+.prev-arrow {
+    left: 20px;
+}
+
+.next-arrow {
+    right: 20px;
+}
+
+/* NOUVEAUX styles pour les cartes déplaçables */
+:root {
+    --neutral-950: #0a0a0a00;
+    --neutral-800: #262626;
+    --neutral-200: #e5e5e5;
+    --indigo-500: #6366f1;
+}
+
+#drag-cards-section {
+    position: relative;
+    z-index: 20;
+    min-height: 100vh;
+    width: 100%;
+    display: grid;
+    place-content: center;
+    overflow: hidden;
+    background-color: var(--neutral-950);
+    margin-top: -100vh;
+}
+
+.drag-cards-title {
+    position: relative;
+    z-index: 0;
+    font-size: 20vw;
+    font-weight: 900;
+    color: var(--neutral-800);
+    margin: 0;
+    text-align: center;
+}
+
+.drag-cards-title .text-indigo-500 {
+    color: var(--indigo-500);
+}
+
+@media (min-width: 768px) {
+    .drag-cards-title {
+        font-size: 200px;
+    }
+}
+
+.drag-cards-container {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+}
+
+.drag-card {
+    position: absolute;
+    background-color: var(--neutral-200);
+    padding: 4px;
+    padding-bottom: 16px;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+}
+
+.drag-card img {
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+}
+
+.w-24 { width: 144px*2; }
+.w-36 { width: 192px*2; }
+.w-40 { width: 208px*2; }
+.w-48 { width: 240px*2; }
+.w-52 { width: 256px*2; }
+
+@media (min-width: 768px) {
+    .md\:w-48 { width: 240px; }
+    .md\:w-56 { width: 272px; }
+    .md\:w-64 { width: 304px; }
+    .md\:w-72 { width: 336px; }
+    .md\:w-80 { width: 384px; }
+}
+
+.image-centrale {
+    padding: 20%;
+  break-inside: avoid;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  opacity: 1; /* Initial state for scroll animation */
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Animation properties */
+  position: relative;
+}
+
+
+.image-centrale:hover {
+    transform: scale(1.05);
+}

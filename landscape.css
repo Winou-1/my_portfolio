@@ -201,7 +201,7 @@ body {
     top: 0;
     height: 100vh;
     width: 100%;
-    background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+    background-image: url('img/paysages/compressed/_DSC3864_comp.avif');
     background-position: center;
     background-repeat: no-repeat;
     background-size: 120%; /* Taille initiale restaurée */
@@ -213,7 +213,7 @@ body {
     left: 0;
     right: 0;
     height: 24rem;
-    background: linear-gradient(to bottom, rgba(9, 9, 11, 0), #09090b);
+    background: linear-gradient(to bottom, rgba(9, 9, 11, 0), #000320);
 }
 
 /* Travel Sections */
@@ -223,6 +223,7 @@ body {
     align-items: center;
     position: relative;
     overflow: hidden;
+    bottom: 50px;
 }
 .travel-content {
     display: flex;
@@ -313,9 +314,11 @@ body {
 .travel-section:nth-child(1) { background: #111; }
 .travel-section:nth-child(2) { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
 .travel-section:nth-child(3) { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-.travel-section:nth-child(4) { background: linear-gradient(180deg, #080808 0%, #00f2fe 100%); }
-.travel-section:nth-child(5) { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
-.travel-section:nth-child(6) { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+.travel-section:nth-child(4) { background: linear-gradient(180deg, #ffffff 0%, #f59494 100%); }
+.travel-section:nth-child(5) { background: linear-gradient(180deg, #000320 0%, #1c5380 80%, #f59494 100%); }
+.travel-section:nth-child(6) { background: linear-gradient(180deg, #f59494 0%, #6e80bb 100%); }
+.travel-section:nth-child(7) { background: linear-gradient(180deg, #6e80bb 0%, rgb(197, 71, 33) 50%, #000000 100%); }
+
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
