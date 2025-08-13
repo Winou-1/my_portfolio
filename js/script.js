@@ -187,7 +187,7 @@ function initPage() {
     // Empêcher le clic droit et le glisser-déposer
     document.body.addEventListener('contextmenu', e => e.preventDefault());
     document.body.addEventListener('dragstart', e => e.preventDefault());
-
+    window.scrollTo(0, 0); // Scroll to top on page load
     // Initial animation for carousel
     animate();
     
