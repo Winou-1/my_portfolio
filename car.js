@@ -239,9 +239,19 @@ document.addEventListener('click', (e) => {
     if (button) {
         // Prevent default button action
         e.preventDefault();
-        
-        // Get the destination URL for the gallery
-        const destinationUrl = '/gallery/template/template.html';
+        const destinationUrl = button.dataset.galleryUrl;
+        if (button.id === 'mon-id-de-bouton') {
+            const destinationUrl = button.dataset.galleryUrl;
+        }
+        if (button.id === 'mon-id-de-bouton') {
+            const destinationUrl = button.dataset.galleryUrl;
+        }
+        if (button.id === 'mon-id-de-bouton') {
+            const destinationUrl = button.dataset.galleryUrl;
+        }
+        if (button.id === 'mon-id-de-bouton') {
+            const destinationUrl = button.dataset.galleryUrl;
+        }
 
         // Start the fade-out animation
         pageTransition.classList.add('is-active');
