@@ -213,7 +213,7 @@ body {
     left: 0;
     right: 0;
     height: 24rem;
-    background: linear-gradient(to bottom, rgba(9, 9, 11, 0), #002005);
+    background: linear-gradient(to bottom, rgba(9, 9, 11, 0), #181818);
 }
 
 /* Travel Sections */
@@ -315,14 +315,16 @@ body {
 .travel-section:nth-child(2) { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
 .travel-section:nth-child(3) { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
 .travel-section:nth-child(4) { background: linear-gradient(180deg, #ffffff 0%, #f59494 100%); }
-.travel-section:nth-child(5) { background: linear-gradient(180deg, #002005 0%, #801c1c 100%); }
+.travel-section:nth-child(5) { background: linear-gradient(180deg, #181818 0%, #801c1c 100%); }
 .travel-section:nth-child(6) { background: linear-gradient(180deg, #801c1c 0%,#6e80bb 100%); }
 .travel-section:nth-child(7) { background: linear-gradient(180deg, #6e80bb 0%, #f59494 100%); }
-.travel-section:nth-child(8) { background: linear-gradient(180deg, #f59494 0%, rgb(197, 71, 33) 50%, #692222 100%); }
-.travel-section:nth-child(9) { background: linear-gradient(180deg, #6e80bb 0%, #f59494 100%); }
-.travel-section:nth-child(10) { background: linear-gradient(180deg, #6e80bb 0%, #f59494 100%); }
-.travel-section:nth-child(11) { background: linear-gradient(180deg, #6e80bb 0%, #f59494 100%); }
-.travel-section:nth-child(12) { background: linear-gradient(180deg, #6e80bb 0%, #f59494 100%); }
+.travel-section:nth-child(8) { background: linear-gradient(180deg, #f59494 0%, rgb(221, 155, 68) 50%, #25643d 100%); }
+.travel-section:nth-child(9) { background: linear-gradient(180deg, #25643d 0%, #be94f5 100%); }
+.travel-section:nth-child(10) { background: linear-gradient(180deg, #be94f5 0%, #f5ef94 100%); }
+.travel-section:nth-child(11) { background: linear-gradient(180deg, #f5ef94 0%, rgb(111, 170, 114) 20%, #304f79 100%); }
+.travel-section:nth-child(12) { background: linear-gradient(180deg, #304f79 0%, #304f79 10%, #c2c17a 50%,#c99047 100%); }
+.travel-section:nth-child(13) { background: linear-gradient(180deg, #c99047 0%, #750000 50%,#000000 100%); }
+
 
 
 /* Responsive adjustments */
