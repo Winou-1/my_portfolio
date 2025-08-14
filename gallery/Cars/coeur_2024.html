@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les îles</title>
+    <title>Rallye du coeur 2024</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="island.css">
+    <link rel="stylesheet" href="coeur_2024.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body class="bg-zinc-900 overflow-x-hidden">
     <!-- Loading Screen -->
     <div id="loadingScreen">
@@ -28,7 +29,7 @@
         <div class="particle"></div>
         
         <div class="loading-container">
-            <h1 class="loading-title">Les îles</h1>
+            <h1 class="loading-title">Rallye du coeur 2024</h1>
             <div class="loading-bar-container">
                 <div class="loading-bar" id="loadingBar"></div>
             </div>
@@ -36,7 +37,9 @@
             <div class="loading-text">Chargement des images...</div>
         </div>
     </div>
+
     <div class="header finisher-header" style="width: 100%;">
+        <div id="overlay" class=""></div>
                 <nav class="navbar">
             <div class="navbar-container">
                 <a href="../../index.html" class ="navbar-logo">Picture</a>
@@ -47,8 +50,8 @@
                     </button>
                     <ul class="navbar-menu">
                         <li><a href="../../index.html">Home</a></li>
-                        <li><a href="../../car.html">Cars</a></li>
-                        <li><a href="../../landscape.html"class="active">Landscape</a></li>
+                        <li><a href="../../car.html"class="active">Cars</a></li>
+                        <li><a href="../../landscape.html">Landscape</a></li>
                         <li><a href="#">Shooting</a></li>
                         <li><a href="#">Contact</a></li>
                     </ul>
@@ -59,11 +62,11 @@
                 <div id="pin-container" class="relative h-[150vh]">
                     <div id="zoom-effect-wrapper" class="h-screen w-full relative overflow-hidden flex items-center justify-center">
                         <div id="background-image" class="absolute inset-0 z-0">
-                            <img src="../../img/template/rond/rond_test_2.png" alt="Background" class="w-full h-full object-contain image-centered">
+                            <img src="../../img/template/rond/rond_test_8.png" alt="Background" class="w-full h-full object-contain image-centered">
                         </div>
                         <div class="relative z-10 h-screen flex flex-col items-center justify-center text-center">
                             <h1 id="main-text" class="text-7xl md:text-8xl lg:text-9xl font-bold uppercase tracking-wide leading-none text-stroke">
-                                Travel
+                                Rallye du coeur
                             </h1>
                             <p class="text-white text-xl md:text-2xl mt-4">
                                 A Journey Through the Lands
@@ -76,204 +79,215 @@
                     <h2 class="drag-cards-title">Picture<span class="text-indigo-500">.</span></h2>
                   <div class="drag-cards-container">
                     <div class="drag-card w-36 md:w-56" data-rotate="6deg" data-top="20%" data-left="25%">
-                      <img src="../../img/paysages/compressed/1681318436560_comp.avif" alt="Carte 1" />
+                      <img src="../../img/voiture/compressed/coeur_2025/DSC08610_comp.avif" alt="Carte 1" />
                     </div>
                     <div class="drag-card w-24 md:w-48" data-rotate="12deg" data-top="45%" data-left="60%">
-                      <img src="../../img/paysages/compressed/1681408805184_comp.avif" alt="Carte 2" />
+                      <img src="../../img/voiture/compressed/coeur_2025/DSC08225-Récupéré (1)_comp.avif" alt="Carte 2" />
                     </div>
                     <div class="drag-card w-52 md:w-80" data-rotate="-6deg" data-top="20%" data-left="40%">
-                      <img src="../../img/paysages/compressed/1681408805134_comp.avif" alt="Carte 3" />
+                      <img src="../../img/voiture/compressed/coeur_2025/DSC08883_comp.avif" alt="Carte 3" />
                     </div>
                     <div class="drag-card w-48 md:w-72" data-rotate="8deg" data-top="50%" data-left="25%">
-                      <img src="../../img/paysages/compressed/DSC05726_comp.avif" alt="Carte 4" />
+                      <img src="../../img/voiture/compressed/coeur_2025/DSC09001_comp.avif" alt="Carte 4" />
                     </div>
                     <div class="drag-card w-40 md:w-64" data-rotate="18deg" data-top="20%" data-left="65%">
-                      <img src="../../img/paysages/compressed/1692226618481_comp.avif" alt="Carte 5" />
+                      <img src="../../img/voiture/compressed/coeur_2025/DSC08415 (1)_comp.avif" alt="Carte 5" />
                     </div>
                     <div class="drag-card w-24 md:w-48" data-rotate="-3deg" data-top="35%" data-left="55%">
-                      <img src="../../img/paysages/compressed/1681846530265_comp.avif" alt="Carte 6" />
+                      <img src="../../img/voiture/compressed/coeur_2025/DSC08594_comp.avif" alt="Carte 6" />
                     </div>
                   </div>
                 </section>
                 <div class = "image-centrale">
-                    <img src="../../img/paysages/compressed/1681846530265_comp.avif" alt="Artistic image 1">
+                    <img src="../../img/voiture/compressed/coeur_2025/DSC08562 (2)_comp.avif" alt="Artistic image 1">
                 </div>
                 <main>
                   <h2 class="title">La Galerie</h2>
                   <div class="image-container">
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/DSC05661_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC09049_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1692226618744_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08295_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1681318436560_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08801_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1657920152274_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08156_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/IMG_20230803_223359_004_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08610_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1681408805184_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC09001_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/_DSC6150_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08780_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1681666837315_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08256_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1681408805082_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC09097_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1692226618803_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08351_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/DSC05587_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08594_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1681408805134_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08547_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/DSC05726_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC09192_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1684616368489_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC09190_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1684616368368_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08684_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/DSC05654_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08225-Récupéré (1)_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1692226618931_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08657_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/DSC05547_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08072_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1658091099569_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC07891-Récupéré_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1681846530319_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC09133_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1681846530389_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08179_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1692219989063_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08562 (2)_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1681583385585_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08883_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1658091099472_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC09011_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/DSC05759_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08719_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1692226618606_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC09207_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1681408805009_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC07889-Récupéré_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/IMG_20230803_223456_341_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08491_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/DSC05772_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08226-Récupéré-Récupéré_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1692226618524_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08418-Récupéré_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1681666837604_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08239_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1650647462791_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08815_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/DSC05760_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC07887-Récupéré_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1658091099602_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08367_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/DSC05718_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08415 (1)_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1692219988999_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08740_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1648251147814_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08171 (1)_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1658091099408_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC09083_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1682079223441_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/IMG_20240714_150024_755_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1681846530265_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08462_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1648247166521_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08001_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1692226618656_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08653_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1692226618848_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08016_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1682079223550_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC09185_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1681666837757_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08031_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1692226618481_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08392_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1682079223269_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08119_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1681318436514_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08716_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1682079223475_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08809_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1681318436607_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC09163_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1654638595260_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08593_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1681666837450_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08807_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1692219989031_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/amg_gtr_bleu.jpg">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1658091099536_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC07974_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1692219988932_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08167_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1682079223336_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08984_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
-                      <div class="image-wrapper" data-src="../../img/paysages/compressed/1682079223374_comp.avif">
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08376_comp.avif">
                           <canvas class="gallery-image-canvas"></canvas>
                       </div>
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08770_comp.avif">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08282_comp.avif">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      <div class="image-wrapper" data-src="../../img/voiture/compressed/coeur_2025/DSC08426_comp.avif">
+                          <canvas class="gallery-image-canvas"></canvas>
+                      </div>
+                      
 
-                    </div>
+                      
+                  </div>
                 </main>
 
                 <div id="galleryModal" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-90 flex justify-center items-center z-[10000] hidden">
@@ -294,44 +308,44 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
-    <script src="island.js"></script> 
+    <script src="coeur_2024.js" type="text/javascript"></script>
     <script src="../../js/finisher-header.es5.min.js" type="text/javascript"></script>
-<script type="text/javascript">
-new FinisherHeader({
-  "count": 100,
-  "size": {
-    "min": 2,
-    "max": 8,
-    "pulse": 0
-  },
-  "speed": {
-    "x": {
-      "min": 0,
-      "max": 0.4
-    },
-    "y": {
-      "min": 0,
-      "max": 0.6
-    }
-  },
-  "colors": {
-    "background": "#000000",
-    "particles": [
-      "#fbfcca",
-      "#d7f3fe",
-      "#ffd0a7"
-    ]
-  },
-  "blending": "overlay",
-  "opacity": {
-    "center": 1,
-    "edge": 0
-  },
-  "skew": -2,
-  "shapes": [
-    "c"
-  ]
-});
-</script>
+    <script type="text/javascript">
+        new FinisherHeader({
+            "count": 100,
+            "size": {
+                "min": 2,
+                "max": 8,
+                "pulse": 0
+            },
+            "speed": {
+                "x": {
+                    "min": 0,
+                    "max": 0.4
+                },
+                "y": {
+                    "min": 0,
+                    "max": 0.6
+                }
+            },
+            "colors": {
+                "background": "#000000",
+                "particles": [
+                    "#fbfcca",
+                    "#d7f3fe",
+                    "#ffd0a7"
+                ]
+            },
+            "blending": "overlay",
+            "opacity": {
+                "center": 1,
+                "edge": 0
+            },
+            "skew": -2,
+            "shapes": [
+                "c"
+            ]
+        });
+    </script>
 </body>
 </html>
