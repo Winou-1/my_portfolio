@@ -254,7 +254,7 @@ function initPage() {
     $items.forEach((item, i) => {
       item.addEventListener('click', () => {
         if (i === active) {
-          const targetPages = [
+          /*const targetPages = [
             "page1.html", 
             "page2.html", 
             "page3.html", 
@@ -265,7 +265,7 @@ function initPage() {
             "page8.html", 
             "page9.html", 
             "page10.html"
-          ];
+          ];*/
 
           if (targetPages[i]) {
             window.location.href = targetPages[i];
