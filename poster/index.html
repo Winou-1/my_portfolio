@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team_carspotting - Posters d'Exception</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- VARIABLES & RESET --- */
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #06b6d4;
+            --bg-dark: #0a0a0a;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --text-main: #ffffff;
+            --text-muted: #9ca3af;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --glass: rgba(10, 10, 10, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --nav-height: 80px;
+            --input-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+            padding-bottom: 80px; /* Espace pour la nav mobile */
+        }
+
+        h1, h2, h3, h4, h5, h6, .logo {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        a { text-decoration: none; color: inherit; cursor: pointer; }
+        ul { list-style: none; }
+        button { border: none; outline: none; background: none; cursor: pointer; font-family: inherit; }
+        input { font-family: inherit; }
+
+        /* --- UTILITAIRES DE VUES (SPA) --- */
+        .view-section {
+            display: none;
+            padding-top: var(--nav-height);
+            min-height: 100vh;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- TOAST NOTIFICATION --- */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: rgba(20, 20, 20, 0.95);
+            border: 1px solid var(--glass-border);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideUp 0.3s ease forwards;
+            backdrop-filter: blur(10px);
+        }
+
+        .toast.success { border-bottom: 2px solid var(--primary); }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; transform: translateY(-10px); }
+        }
+
+        /* --- NAVBAR DESKTOP --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--nav-height);
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            justify-content: center;
+            padding: 0 2rem;
+        }
+
+        .navbar.scrolled {
+            top: 1rem;
+            height: 60px;
+        }
+
+        .nav-container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .navbar.scrolled .nav-container {
+            background: rgba(20, 20, 20, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 0 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            z-index: 2;
+        }
+
+        .nav-center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #fff;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            z-index: 2;
+        }
+
+        .icon-btn {
+            position: relative;
+            font-size: 1.2rem;
+            color: var(--text-main);
+            transition: transform 0.2s, color 0.2s;
+        }
+        
+        .icon-btn:hover { color: var(--primary); transform: scale(1.1); }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--secondary);
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* --- MOBILE BOTTOM NAV --- */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--glass-border);
+            padding: 1rem;
+            justify-content: space-around;
+            z-index: 1001;
+        }
+
+        .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            gap: 5px;
+        }
+
+        .mobile-nav-item.active { color: var(--primary); }
+        .mobile-nav-item svg { width: 24px; height: 24px; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: var(--nav-height);
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.15) 0%, rgba(10, 10, 10, 1) 70%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            padding: 0 2rem;
+            z-index: 10;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s ease forwards 0.3s;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(118, 75, 162, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(118, 75, 162, 0.6);
+        }
+
+        /* --- COLLECTION GRID --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-pill {
+            padding: 0.6rem 1.5rem;
+            border-radius: 100px;
+            border: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            background: var(--bg-card);
+            transition: all 0.3s ease;
+        }
+
+        .filter-pill:hover, .filter-pill.active {
+            background: var(--gradient);
+            color: white;
+            border-color: transparent;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .card-img-container {
+            height: 380px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img { transform: scale(1.05); }
+
+        .card-info {
+            padding: 1.5rem;
+            position: relative;
+            background: linear-gradient(to top, rgba(10,10,10,1), rgba(10,10,10,0));
+        }
+
+        .card-title { font-size: 1.2rem; margin-bottom: 0.3rem; }
+        .card-artist { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; }
+        .price { font-size: 1.2rem; font-weight: 700; color: #fff; }
+
+        /* --- PAGE DÉTAIL PRODUIT (OVERLAY) --- */
+        .product-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-dark);
+            z-index: 2000;
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-overlay.active { transform: translateY(0); }
+
+        .close-detail {
+            position: absolute; top: 2rem; right: 2rem;
+            font-size: 2rem; color: var(--text-muted); cursor: pointer;
+            z-index: 2001; transition: color 0.3s;
+            background: rgba(0,0,0,0.5); width: 50px; height: 50px;
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+        }
+
+        .close-detail:hover { color: #fff; background: var(--primary); }
+
+        .detail-container {
+            max-width: 1400px; margin: 0 auto; min-height: 100vh;
+            display: flex; flex-wrap: wrap; width: 100%;
+        }
+
+        .detail-image-section {
+            flex: 1 1 50%;
+            background: #050505;
+            display: flex; align-items: center; justify-content: center;
+            padding: 4rem; position: relative;
+        }
+
+        /* --- CAROUSEL STYLES --- */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .detail-img {
+            max-height: 70vh; max-width: 100%;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            border-radius: 4px; object-fit: contain;
+            transition: opacity 0.3s ease;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 1.5rem;
+            padding: 0;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .carousel-btn:hover { background: rgba(255,255,255,0.25); transform: translateY(-50%) scale(1.1); }
+        .carousel-btn.prev { left: 1rem; }
+        .carousel-btn.next { right: 1rem; }
+
+        .carousel-dots {
+            display: flex;
+            gap: 10px;
+            margin-top: 1.5rem;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            background: var(--primary);
+            transform: scale(1.3);
+        }
+
+        .detail-info-section {
+            flex: 1 1 50%; padding: 6rem 4rem;
+            display: flex; flex-direction: column; justify-content: center;
+            background: var(--bg-dark);
+        }
+
+        .detail-options {
+            margin-bottom: 3rem;
+        }
+
+        .option-group {
+            margin-bottom: 2rem;
+        }
+
+        .option-label {
+            display: block;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .option-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .opt-btn {
+            padding: 0.8rem 1.5rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 50px; /* Style pill/chip arrondi */
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.05);
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .opt-btn:hover {
+            border-color: var(--primary);
+            color: #fff;
+            transform: translateY(-2px);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .opt-btn.selected {
+            background: var(--gradient);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .add-to-cart-lg {
+            width: 100%;
+            max-width: 400px;
+            padding: 1.2rem;
+            background: #fff;
+            color: #000;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .add-to-cart-lg:hover {
+            background: var(--primary);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        .detail-description {
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+            max-width: 600px;
+            line-height: 1.7;
+        }
+
+        .detail-title {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-artist {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+        }
+
+        .detail-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #fff;
+        }
+        
+        .detail-breadcrumbs {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- PAGE PANIER --- */
+        .cart-section {
+            padding-top: 120px;
+            max-width: 1000px;
+            margin: 0 auto;
+            min-height: 80vh;
+        }
+
+        .cart-header {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1rem;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            background: var(--bg-card);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            transition: transform 0.3s;
+        }
+
+        .cart-item:hover { transform: translateX(5px); }
+
+        .cart-item-img {
+            width: 80px; height: 80px; object-fit: cover;
+            border-radius: 8px; margin-right: 1.5rem;
+        }
+
+        .cart-item-info { flex: 1; }
+        .cart-item-title { font-weight: 700; font-size: 1.1rem; }
+        .cart-item-details { color: var(--text-muted); font-size: 0.9rem; }
+        .cart-item-price { font-weight: 700; font-size: 1.2rem; color: var(--primary); }
+        .remove-btn { color: #ef4444; font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8; }
+        .remove-btn:hover { opacity: 1; text-decoration: underline; }
+
+        .cart-summary {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 3rem;
+            text-align: right;
+            border: 1px solid var(--glass-border);
+        }
+
+        .cart-total { font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem; display: block; }
+        
+        .empty-cart-msg {
+            text-align: center; color: var(--text-muted);
+            padding: 4rem; font-size: 1.2rem;
+        }
+
+        /* --- PAGE COMPTE (LOGIN/REGISTER) --- */
+        .account-container {
+            display: flex; justify-content: center; align-items: center;
+            min-height: 85vh; padding: 2rem;
+        }
+
+        .auth-card {
+            background: rgba(20, 20, 20, 0.95);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 3rem;
+            width: 100%; max-width: 450px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .auth-header { text-align: center; margin-bottom: 2.5rem; }
+        .auth-header h2 { font-size: 2rem; margin-bottom: 0.5rem; }
+        .auth-header p { color: var(--text-muted); }
+
+        .form-group { margin-bottom: 1.5rem; }
+        .form-label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted); }
+        .form-input {
+            width: 100%; padding: 1rem;
+            background: var(--input-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px; color: #fff;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus { border-color: var(--primary); background: rgba(255,255,255,0.08); }
+
+        .auth-switch {
+            text-align: center; margin-top: 1.5rem; font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .auth-switch span { color: var(--primary); cursor: pointer; font-weight: 600; }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* --- MEDIA QUERIES (MOBILE FIXES) --- */
+        @media (max-width: 768px) {
+            .navbar { padding: 0 1rem; display: none; } /* Cache la top nav sur mobile */
+            .mobile-nav { display: flex; } /* Affiche la bottom nav */
+            
+            .hero h1 { font-size: 3rem; }
+            .hero { padding-top: 0; }
+            .container { padding: 3rem 1rem; padding-bottom: 6rem; }
+            
+            /* CORRECTION DÉTAIL PRODUIT MOBILE */
+            .detail-container { flex-direction: column; width: 100%; }
+            .detail-image-section { 
+                padding: 2rem 1rem; 
+                flex: none; 
+                width: 100%; 
+                min-height: 40vh;
+            }
+            .detail-img {
+                max-width: 100%;
+                height: auto;
+                max-height: 50vh; 
+            }
+            .detail-info-section { 
+                padding: 2rem; 
+                flex: none; 
+                width: 100%;
+                padding-bottom: 8rem; /* Espace pour bottom nav */
+            }
+            .detail-title { font-size: 2rem; }
+            .close-detail { top: 1rem; right: 1rem; width: 40px; height: 40px; font-size: 1.5rem; }
+            
+            /* Panier et Compte sur mobile */
+            .cart-section, .account-container { padding-left: 1rem; padding-right: 1rem; padding-top: 4rem; }
+            .auth-card { padding: 2rem; }
+            .cart-section { padding-bottom: 6rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR DESKTOP -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a onclick="switchView('home')" class="logo">Team_carspotting</a>
+            
+            <div class="nav-center">
+                <ul style="display: flex; gap: 2rem;">
+                    <li><a onclick="switchView('home')" class="nav-link active">Accueil</a></li>
+                    <li><a onclick="switchView('home', 'collection')" class="nav-link">Collection</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-right">
+                <button class="icon-btn" onclick="switchView('account')" title="Compte">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </button>
+                <button class="icon-btn" onclick="switchView('cart')" title="Panier">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    <span class="cart-count desktop-cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MOBILE BOTTOM NAV -->
+    <div class="mobile-nav">
+        <div class="mobile-nav-item active" onclick="switchView('home')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span>Accueil</span>
+        </div>
+        <div class="mobile-nav-item" onclick="switchView('home', 'collection')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            <span>Galerie</span>
+        </div>
+        <div class="mobile-nav-item" onclick="switchView('cart')">
+            <div style="position: relative;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                <span class="cart-count mobile-cart-count" style="top: -5px; right: -5px; width: 14px; height: 14px; font-size: 0.6rem;">0</span>
+            </div>
+            <span>Panier</span>
+        </div>
+        <div class="mobile-nav-item" onclick="switchView('account')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span>Compte</span>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- VUE ACCUEIL -->
+    <div id="view-home" class="view-section active">
+        <!-- HERO SECTION -->
+        <section class="hero" id="home">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <h1>L'Art de l'Intérieur</h1>
+                <p>Découvrez une collection exclusive de posters d'art pour sublimer votre espace de vie.</p>
+                <button onclick="switchView('home', 'collection')" class="btn btn-primary">Explorer la Collection</button>
+            </div>
+        </section>
+
+        <!-- COLLECTION SECTION -->
+        <section class="container" id="collection">
+            <div class="filters">
+                <button class="filter-pill active" onclick="filterProducts('all')">Tout</button>
+                <button class="filter-pill" onclick="filterProducts('lamborghini')">Lamborghini</button>
+                <button class="filter-pill" onclick="filterProducts('Ferrari')">Ferrari</button>
+                <button class="filter-pill" onclick="filterProducts('Mclaren')">Mclaren</button>
+            </div>
+
+            <div class="grid" id="productsGrid">
+                <!-- Products injected by JS -->
+            </div>
+        </section>
+    </div>
+
+    <!-- VUE PANIER -->
+    <div id="view-cart" class="view-section">
+        <div class="cart-section">
+            <div class="cart-header">
+                <h2>Votre Panier</h2>
+            </div>
+            <div id="cartItemsContainer">
+                <!-- Items injected here -->
+            </div>
+            <div id="cartTotalSection" class="cart-summary" style="display: none;">
+                <span class="cart-total">Total: <span id="cartTotalValue">0.00€</span></span>
+                <button class="btn btn-primary" onclick="showToast('Commande validée ! (Simulation)')">Passer la commande</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- VUE COMPTE (LOGIN/REGISTER) -->
+    <div id="view-account" class="view-section">
+        <div class="account-container">
+            
+            <!-- Login Form -->
+            <div id="loginForm" class="auth-card">
+                <div class="auth-header">
+                    <h2>Connexion</h2>
+                    <p>Bon retour parmi nous</p>
+                </div>
+                <form onsubmit="event.preventDefault(); showToast('Connexion réussie !');">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" placeholder="exemple@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Mot de passe</label>
+                        <input type="password" class="form-input" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Se connecter</button>
+                </form>
+                <div class="auth-switch">
+                    Pas encore de compte ? <span onclick="toggleAuthMode()">Créer un compte</span>
+                </div>
+            </div>
+
+            <!-- Register Form (Hidden by default) -->
+            <div id="registerForm" class="auth-card" style="display: none;">
+                <div class="auth-header">
+                    <h2>Créer un compte</h2>
+                    <p>Rejoignez la communauté ARTIVA</p>
+                </div>
+                <form onsubmit="event.preventDefault(); showToast('Inscription réussie !');">
+                    <div class="form-group">
+                        <label class="form-label">Nom complet</label>
+                        <input type="text" class="form-input" placeholder="Jean Dupont" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" placeholder="exemple@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Mot de passe</label>
+                        <input type="password" class="form-input" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">S'inscrire</button>
+                </form>
+                <div class="auth-switch">
+                    Déjà un compte ? <span onclick="toggleAuthMode()">Se connecter</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- PAGE DÉTAIL PRODUIT (OVERLAY) -->
+    <div class="product-overlay" id="productOverlay">
+        <button class="close-detail" onclick="closeProductDetail()">×</button>
+        <div class="detail-container">
+            <div class="detail-image-section">
+                <!-- CAROUSEL WRAPPER -->
+                <div class="carousel-container">
+                    <button class="carousel-btn prev" onclick="changeImage(-1)">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
+                    
+                    <img src="" alt="" class="detail-img" id="detailImg">
+                    
+                    <button class="carousel-btn next" onclick="changeImage(1)">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+
+                    <div class="carousel-dots" id="carouselDots">
+                        <!-- Dots injected via JS -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="detail-info-section">
+                <div style="margin-bottom: 2rem;">
+                    <span class="detail-breadcrumbs">Collection / <span id="detailCategory"></span></span>
+                </div>
+                
+                <h2 class="detail-title" id="detailTitle">Titre du Produit</h2>
+                <p class="detail-artist" id="detailArtist">Artiste Nom</p>
+                
+                <div class="detail-price" id="detailPrice">49.00€</div>
+
+                <div class="detail-description">
+                    Une œuvre d'art exceptionnelle imprimée sur du papier mat de qualité musée (200g/m²). Couleurs vives, durabilité garantie et finition soignée pour un rendu galerie chez vous.
+                </div>
+
+                <div class="detail-options">
+                    <div class="option-group">
+                        <label class="option-label">Taille</label>
+                        <div class="option-buttons" id="sizeOptions">
+                            <button class="opt-btn selected" onclick="selectSize(0)">30x40 cm</button>
+                            <button class="opt-btn" onclick="selectSize(1)">50x70 cm</button>
+                            <button class="opt-btn" onclick="selectSize(2)">70x100 cm</button>
+                        </div>
+                    </div>
+                    
+                    <div class="option-group">
+                        <label class="option-label">Finition</label>
+                        <div class="option-buttons" id="frameOptions">
+                            <button class="opt-btn selected" onclick="selectFrame(0)">Sans Cadre</button>
+                            <button class="opt-btn" onclick="selectFrame(1)">Cadre Noir</button>
+                            <button class="opt-btn" onclick="selectFrame(2)">Cadre Chêne</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="add-to-cart-lg" onclick="addToCartFromDetail()">
+                    Ajouter au Panier <span>→</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // --- DONNÉES PRODUITS AVEC PLUSIEURS IMAGES ---
+        const products = [
+            {
+                id: 1, 
+                title: "Ferrari pista", 
+                artist: "Team_carspotting", 
+                basePrice: 25.00, 
+                category: "Ferrari", 
+                images: [
+                    "images/Mockup_ferrai_pista_1.jpg",
+                    "images/Mockup_ferrai_pista_2.jpg",
+                    "images/Mockup_ferrai_pista_3.jpg",
+                    "images/Mockup_ferrai_pista_4.jpg",
+                    "images/Mockup_ferrai_pista_5.jpg",
+                    "images/Mockup_ferrai_pista_6.jpg",
+                    "images/Mockup_ferrai_pista_7.jpg",
+                    "images/Mockup_ferrai_pista_8.jpg"
+                ]
+            },
+            {
+                id: 2, 
+                title: "Aventador SV", 
+                artist: "Team_carspotting", 
+                basePrice: 25.00, 
+                category: "lamborghini", 
+                images: [
+                    "images/Mockup_aventador_sv_1.jpg",
+                    "images/Mockup_aventador_sv_2.jpg",
+                    "images/Mockup_aventador_sv_3.jpg"
+                ]
+            },
+            {
+                id: 3, 
+                title: "Mclaren 675lt", 
+                artist: "Team_carspotting", 
+                basePrice: 25.00, 
+                category: "Mclaren", 
+                images: [
+                    "images/675lt_pres.jpg",
+                ]
+            },
+            {
+                id: 4, 
+                title: "Revuelto", 
+                artist: "Team_carspotting", 
+                basePrice: 25.00, 
+                category: "lamborghini", 
+                images: [
+                    "images/aventador_1.jpg",
+                ]
+            },
+            {
+                id: 5, 
+                title: "Mclaren 720s", 
+                artist: "Team_carspotting", 
+                basePrice: 25.00, 
+                category: "Mclaren", 
+                images: [
+                    "images/720s_1.jpg",
+                ]
+            },
+            {
+                id: 6, 
+                title: "Ferrari F40", 
+                artist: "Team_carspotting", 
+                basePrice: 25.00, 
+                category: "Ferrari", 
+                images: [
+                    "images/fefe_1.jpg",
+                ]
+            }
+        ];
+
+        // --- STATE ---
+        let cart = [];
+        let currentProduct = null;
+        let selectedSizeIndex = 0;
+        let selectedFrameIndex = 0;
+        let currentImageIndex = 0; // Nouvel état pour le carrousel
+
+        const sizes = [
+            { label: "30x40 cm", multiplier: 1 },
+            { label: "50x70 cm", multiplier: 1.5 },
+            { label: "70x100 cm", multiplier: 2.2 }
+        ];
+
+        const frames = [
+            { label: "Sans Cadre", price: 0 },
+            { label: "Cadre Noir", price: 25 },
+            { label: "Cadre Chêne", price: 35 }
+        ];
+
+        // --- LOAD CART ---
+        function loadCart() {
+            const saved = localStorage.getItem('artiva_cart');
+            if (saved) {
+                cart = JSON.parse(saved);
+                updateCartCount();
+            }
+        }
+        function saveCart() {
+            localStorage.setItem('artiva_cart', JSON.stringify(cart));
+        }
+
+        // --- TOAST SYSTEM ---
+        function showToast(message) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast success';
+            toast.innerHTML = `<span>✓</span> ${message}`;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.3s ease forwards';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // --- NAVIGATION SPA ---
+        function switchView(viewName, sectionId = null) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(`view-${viewName}`).classList.add('active');
+            
+            document.querySelectorAll('.mobile-nav-item').forEach(el => el.classList.remove('active'));
+            if(viewName === 'home') document.querySelectorAll('.mobile-nav-item')[0].classList.add('active');
+            if(sectionId === 'collection') {
+                document.querySelectorAll('.mobile-nav-item')[0].classList.remove('active');
+                document.querySelectorAll('.mobile-nav-item')[1].classList.add('active');
+            }
+            if(viewName === 'cart') document.querySelectorAll('.mobile-nav-item')[2].classList.add('active');
+            if(viewName === 'account') document.querySelectorAll('.mobile-nav-item')[3].classList.add('active');
+
+            window.scrollTo(0, 0);
+
+            if(sectionId) {
+                setTimeout(() => {
+                    const el = document.getElementById(sectionId);
+                    if(el) el.scrollIntoView({behavior: 'smooth'});
+                }, 100);
+            }
+            closeProductDetail();
+        }
+
+        // --- AUTH TOGGLE ---
+        function toggleAuthMode() {
+            const login = document.getElementById('loginForm');
+            const register = document.getElementById('registerForm');
+            if (login.style.display === 'none') {
+                login.style.display = 'block';
+                register.style.display = 'none';
+            } else {
+                login.style.display = 'none';
+                register.style.display = 'block';
+            }
+        }
+
+        // --- INITIALISATION PRODUITS ---
+        function renderProducts(filter = 'all') {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+            
+            const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+            
+            filtered.forEach((product, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.animation = `fadeUp 0.6s ease forwards ${index * 0.1}s`;
+                card.style.opacity = '0';
+                
+                // On utilise images[0] pour la vignette principale
+                card.innerHTML = `
+                    <div class="card-img-container">
+                        <img src="${product.images[0]}" alt="${product.title}" class="card-img">
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-title">${product.title}</h3>
+                        <p class="card-artist">${product.artist}</p>
+                        <div class="card-footer">
+                            <span class="price">${product.basePrice}€</span>
+                            <button class="btn-primary" style="padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.8rem;">Voir</button>
+                        </div>
+                    </div>
+                `;
+                card.onclick = () => openProductDetail(product);
+                grid.appendChild(card);
+            });
+        }
+
+        function filterProducts(category) {
+            document.querySelectorAll('.filter-pill').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderProducts(category);
+        }
+
+        // --- GESTION PAGE DÉTAIL ---
+        function openProductDetail(product) {
+            currentProduct = product;
+            selectedSizeIndex = 0;
+            selectedFrameIndex = 0;
+            currentImageIndex = 0; // Reset carrousel
+            
+            updateCarouselImage();
+            renderCarouselDots();
+            
+            document.getElementById('detailTitle').textContent = product.title;
+            document.getElementById('detailArtist').textContent = `Par ${product.artist}`;
+            document.getElementById('detailCategory').textContent = product.category;
+            
+            updateDetailPrice();
+            updateOptionUI();
+            
+            document.getElementById('productOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // --- FONCTIONS CAROUSEL ---
+        function updateCarouselImage() {
+            if(!currentProduct) return;
+            const img = document.getElementById('detailImg');
+            // Petit effet de fondu pour la transition
+            img.style.opacity = '0';
+            setTimeout(() => {
+                img.src = currentProduct.images[currentImageIndex];
+                img.style.opacity = '1';
+            }, 150);
+            
+            // Mise à jour des dots
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentImageIndex);
+            });
+        }
+
+        function changeImage(direction) {
+            if(!currentProduct) return;
+            const count = currentProduct.images.length;
+            currentImageIndex = (currentImageIndex + direction + count) % count;
+            updateCarouselImage();
+        }
+
+        function setImage(index) {
+            currentImageIndex = index;
+            updateCarouselImage();
+        }
+
+        function renderCarouselDots() {
+            const dotsContainer = document.getElementById('carouselDots');
+            dotsContainer.innerHTML = '';
+            if(!currentProduct || currentProduct.images.length <= 1) return;
+
+            currentProduct.images.forEach((_, idx) => {
+                const dot = document.createElement('div');
+                dot.className = `dot ${idx === 0 ? 'active' : ''}`;
+                dot.onclick = () => setImage(idx);
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function closeProductDetail() {
+            document.getElementById('productOverlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function selectSize(index) {
+            selectedSizeIndex = index;
+            updateOptionUI();
+            updateDetailPrice();
+        }
+
+        function selectFrame(index) {
+            selectedFrameIndex = index;
+            updateOptionUI();
+            updateDetailPrice();
+        }
+
+        function updateOptionUI() {
+            document.querySelectorAll('#sizeOptions .opt-btn').forEach((btn, idx) => {
+                btn.classList.toggle('selected', idx === selectedSizeIndex);
+            });
+            document.querySelectorAll('#frameOptions .opt-btn').forEach((btn, idx) => {
+                btn.classList.toggle('selected', idx === selectedFrameIndex);
+            });
+        }
+
+        function updateDetailPrice() {
+            if (!currentProduct) return;
+            const base = currentProduct.basePrice * sizes[selectedSizeIndex].multiplier;
+            const extra = frames[selectedFrameIndex].price;
+            const total = (base + extra).toFixed(2);
+            document.getElementById('detailPrice').textContent = `${total}€`;
+        }
+
+        // --- GESTION PANIER ---
+        function addToCartFromDetail() {
+            if (!currentProduct) return;
+            
+            const base = currentProduct.basePrice * sizes[selectedSizeIndex].multiplier;
+            const extra = frames[selectedFrameIndex].price;
+            const finalPrice = base + extra;
+
+            cart.push({
+                ...currentProduct,
+                img: currentProduct.images[0], // On garde l'image principale pour le panier
+                cartId: Date.now(), 
+                finalPrice: finalPrice,
+                size: sizes[selectedSizeIndex].label,
+                frame: frames[selectedFrameIndex].label
+            });
+
+            saveCart();
+            updateCartCount();
+            closeProductDetail();
+            showToast("Ajouté au panier !");
+            updateCartPage(); 
+        }
+
+        function updateCartCount() {
+            const count = cart.length;
+            document.querySelector('.desktop-cart-count').textContent = count;
+            document.querySelector('.mobile-cart-count').textContent = count;
+        }
+
+        function removeFromCart(cartId) {
+            cart = cart.filter(item => item.cartId !== cartId);
+            saveCart();
+            updateCartCount();
+            updateCartPage();
+        }
+
+        function updateCartPage() {
+            const container = document.getElementById('cartItemsContainer');
+            const totalSection = document.getElementById('cartTotalSection');
+            const totalValue = document.getElementById('cartTotalValue');
+            
+            container.innerHTML = '';
+
+            if (cart.length === 0) {
+                container.innerHTML = '<div class="empty-cart-msg">Votre panier est vide. <br><br> <button class="btn btn-primary" onclick="switchView(\'home\', \'collection\')">Découvrir nos posters</button></div>';
+                totalSection.style.display = 'none';
+            } else {
+                let total = 0;
+                cart.forEach(item => {
+                    total += item.finalPrice;
+                    container.innerHTML += `
+                        <div class="cart-item">
+                            <img src="${item.img}" class="cart-item-img">
+                            <div class="cart-item-info">
+                                <div class="cart-item-title">${item.title}</div>
+                                <div class="cart-item-details">${item.size} • ${item.frame}</div>
+                                <button class="remove-btn" onclick="removeFromCart(${item.cartId})">Supprimer</button>
+                            </div>
+                            <div class="cart-item-price">${item.finalPrice.toFixed(2)}€</div>
+                        </div>
+                    `;
+                });
+                totalValue.textContent = total.toFixed(2) + '€';
+                totalSection.style.display = 'block';
+            }
+        }
+
+        // Modifying the switchView logic for Cart specifically
+        document.querySelector('.icon-btn[onclick="switchView(\'cart\')"]').onclick = function() {
+            updateCartPage();
+            switchView('cart');
+        };
+
+        // --- SCROLL NAVBAR EFFECT ---
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Init
+        loadCart();
+        renderProducts();
+
+    </script>
+</body>
+</html>
