@@ -653,3 +653,52 @@ body.is-transitioning {
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
 }
+
+
+/* Styles pour le bouton de redirection */
+.poster-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10vh; /* Ajustez cette valeur pour l'espacement sous le carrousel */
+    padding-bottom: 2rem;
+}
+
+.poster-button {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding: 15px 40px;
+    border-radius: 5px;
+    border: 2px solid #fff;
+    transition: all 0.3s ease;
+    background: transparent;
+    cursor: pointer;
+    text-align: center;
+    font-family: 'Jost', serif;
+    white-space: nowrap;
+}
+
+.poster-button:hover {
+    color: #000;
+    background: #fff;
+    border-color: #fff;
+}
+
+/* Ajustement pour le carrousel sur les petits écrans pour laisser de la place au bouton */
+@media (max-width: 1100px) {
+    .carousel {
+        height: 85vh; /* Diminution de la hauteur du carrousel */
+    }
+}
+
+@media (max-width: 600px) {
+    .carousel {
+        height: 70vh; /* Diminution de la hauteur du carrousel */
+        margin-top: 100px;
+    }
+    .poster-button {
+        font-size: 1.1rem;
+        padding: 10px 30px;
+    }
+}
